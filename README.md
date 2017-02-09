@@ -20,7 +20,9 @@ To install app on xiaomi from windows
 3. Turn off "MIUI optimization" for xiaomi
 
 .bashrc
+```
 export ANDROID_HOME=/c/Users/Morris/AppData/Local/Android/sdk/
 export PATH=$PATH:/c/Python27:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools
 export PATH=$PATH:/c/Yarn/bin
 export JAVA_HOME=/c/Java/jdk1.8.0_121
+```
