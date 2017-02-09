@@ -5,7 +5,7 @@
  */
 
 import TimeFormatter from 'minutes-seconds-milliseconds';
-import uuid from 'node-uuid';
+import uuid from 'uuid/v4';
 
 import React, { Component } from 'react';
 import {
@@ -47,7 +47,7 @@ export default class seeds extends Component {
   }
 
   _getNewAudioPath() {
-    return AudioUtils.DocumentDirectoryPath + '/' + uuid.v4() + '/recording.aac'
+    return AudioUtils.DocumentDirectoryPath + '/' + uuid() + '.aac'
   }
 
   _renderTitle() {
@@ -223,11 +223,9 @@ export default class seeds extends Component {
   _finishRecording(didSucceed, filePath) {
     this.setState({ finished: didSucceed });
     console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
-    const id = _getIDFromAudioPath(filePath);
     recordings.push(
       { name: 'recording', 
         duration: this.state.recordingDuration, 
-        id: id,
         recordingPath: filePath
       });
     this.setState({
