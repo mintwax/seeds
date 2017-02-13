@@ -83,13 +83,13 @@ export default class seeds extends Component {
               <Text>Record</Text>
           </TouchableOpacity>
         </View>
-      <ListView
+      <ListView contentContainerStyle={styles.list}
         enableEmptySections={true}
         dataSource={this.state.dataSource}
         renderRow={ (rowData) => (
             <TouchableWithoutFeedback
                 onPress={this._playRecording.bind(this, rowData.recordingPath)}>
-              <View style={styles.recordingRow}>
+              <View style={styles.listItem}>
                 <Text style={styles.recordingName}>{rowData.name}</Text>
                 <Text style={styles.recordingDuration}>{TimeFormatter(rowData.duration)}</Text>
               </View>
@@ -301,6 +301,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  list: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  listItem: {
+       backgroundColor: '#CCC',
+        margin: 10,
+        width: 100,
+        height: 100
   },
   recordingRow: {
     flexDirection: 'row',
