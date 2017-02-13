@@ -31,13 +31,16 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-genymotion+ui explorer
-add toggle listview to gridview
-add vector icons to project
+x genymotion+ui explorer
+x add toggle listview to gridview
+add vector icons to project - toggle grid/list
 add delete, list view - swipe left
 add redux / refactor
 edit - add rename
 edit - change icon
+play - highlight box/row on mouseover
+play - highlight box/row onPressDown
+play - highlight the box/row during playing
 add unit tests via jest
 add flow check vscode
 add persistence

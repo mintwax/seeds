@@ -61,7 +61,6 @@ export default class seeds extends Component {
   _renderRecordPanel() {
     return(
       <View style={styles.recordPanel}>
-        <Text style={styles.timer}>{TimeFormatter(this.state.recordingDuration)}</Text>
         <Text style={styles.timer}>{this.state.currentTime}</Text>
       </View>
     )
@@ -225,7 +224,7 @@ export default class seeds extends Component {
     console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
     recordings.push(
       { name: 'recording', 
-        duration: this.state.recordingDuration, 
+        duration: this.state.currentTime, 
         recordingPath: filePath
       });
     this.setState({
