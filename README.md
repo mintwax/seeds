@@ -34,6 +34,8 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 x genymotion+ui explorer
 x add toggle listview to gridview
 add vector icons to project - toggle grid/list
+newest audio should go in to the top left
+newest audio should show animation (fade in, rest shift right)
 add delete, list view - swipe left
 add redux / refactor
 edit - add rename

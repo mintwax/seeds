@@ -7,6 +7,9 @@
 import TimeFormatter from 'minutes-seconds-milliseconds';
 import uuid from 'uuid/v4';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -30,8 +33,20 @@ const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
 });
 
-let recordings = [];
+const LISTLAYOUT = {
+  GRID : "grid",
+  LIST : "list"
+};
 
+// let recordings = [];
+let recordings = [
+  { name: "recording-1", duration: 2 },
+  { name: "recording-2", duration: 20 },
+  { name: "recording-3", duration: 15 },
+  { name: "recording-4", duration: 7 },
+  { name: "recording-5", duration: 4.5 },
+  { name: "recording-6", duration: 6 },
+]
 export default class seeds extends Component {
     
   constructor(props) {
@@ -43,6 +58,7 @@ export default class seeds extends Component {
       recordingDuration: 0,
       recordingStart: null,
       currentTime: 0.0,
+      listLayout: LISTLAYOUT.GRID,
     };
   }
 
@@ -66,10 +82,9 @@ export default class seeds extends Component {
     )
   }
 
-  _renderList() {
-    return(
-      <View>
+  _renderRecordButton() {
 
+    return(
        <View style={styles.recordButtonWrapper}>
         <TouchableOpacity
                 style={styles.recordButton}
@@ -82,21 +97,86 @@ export default class seeds extends Component {
               <Text>Record</Text>
           </TouchableOpacity>
         </View>
-      <ListView contentContainerStyle={styles.list}
+    )
+  }
+
+  _renderList() {
+
+    return(
+      <ListView 
         enableEmptySections={true}
         dataSource={this.state.dataSource}
         renderRow={ (rowData) => (
             <TouchableWithoutFeedback
                 onPress={this._playRecording.bind(this, rowData.recordingPath)}>
-              <View style={styles.listItem}>
+              <View style={ styles.recordingRow }>
                 <Text style={styles.recordingName}>{rowData.name}</Text>
                 <Text style={styles.recordingDuration}>{TimeFormatter(rowData.duration)}</Text>
               </View>
            </TouchableWithoutFeedback>
         )}  
       />
-      </View>
     )
+  }
+
+  _renderGrid() {
+
+    return(
+      <ListView contentContainerStyle={styles.grid}
+        enableEmptySections={true}
+        dataSource={this.state.dataSource}
+        renderRow={ (rowData) => (
+            <TouchableWithoutFeedback
+                onPress={this._playRecording.bind(this, rowData.recordingPath)}>
+              <View style={ styles.gridItem }>
+                <Text style={styles.recordingName}>{rowData.name}</Text>
+                <Text style={styles.recordingDuration}>{TimeFormatter(rowData.duration)}</Text>
+              </View>
+           </TouchableWithoutFeedback>
+        )}  
+      />
+    )
+  }
+
+  _renderListControls() {
+
+    return(
+        <View style={styles.listControls}>
+           <MIcon.Button name="view-list" backgroundColor="#3b5998" 
+              onPress={this._toggleListLayout.bind(this, LISTLAYOUT.LIST)}>List</MIcon.Button>
+           <MIcon.Button name="view-grid" backgroundColor="#3b5998" 
+              onPress={this._toggleListLayout.bind(this, LISTLAYOUT.GRID)}>Grid</MIcon.Button>
+       </View>
+    )
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.top}>
+          {this._renderTitle()}
+          {this._renderRecordPanel()}
+        </View>
+        <View style={styles.bottom}>
+          {this._renderRecordButton()}
+          {this._renderListControls()}
+          {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
+          {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
+        </View>
+      </View>
+    );
+  }
+
+  _toggleListLayout(layoutType) {
+
+    if (layoutType == this.state.listLayout) {
+      return;
+    }
+
+    this.setState( {
+      "listLayout": layoutType
+    })
+
   }
 
   _checkPermission() {
@@ -233,22 +313,10 @@ export default class seeds extends Component {
     });
   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.top}>
-          {this._renderTitle()}
-          {this._renderRecordPanel()}
-        </View>
-        <View style={styles.bottom}>
-          {this._renderList()}
-        </View>
-      </View>
-    );
-  }
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     // justifyContent: 'center',
@@ -301,12 +369,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  list: {
+  listControls: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row'
+  },
+
+  grid: {
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
-  listItem: {
+  gridItem: {
        backgroundColor: '#CCC',
         margin: 10,
         width: 100,
