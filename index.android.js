@@ -40,12 +40,12 @@ const LISTLAYOUT = {
 
 // let recordings = [];
 let recordings = [
-  { name: "recording-1", duration: 2 },
-  { name: "recording-2", duration: 20 },
-  { name: "recording-3", duration: 15 },
-  { name: "recording-4", duration: 7 },
-  { name: "recording-5", duration: 4.5 },
-  { name: "recording-6", duration: 6 },
+  { name: "recording-6", duration: 2, created: Date.now() - 8000 },
+  { name: "recording-5", duration: 20, created: Date.now() - 7000 },
+  { name: "recording-4", duration: 15, created: Date.now() - 6000 },
+  { name: "recording-3", duration: 7, created: Date.now() - 5000 },
+  { name: "recording-2", duration: 4.5, created: Date.now() - 4000 },
+  { name: "recording-1", duration: 6, created: Date.now() - 3000 },
 ]
 export default class seeds extends Component {
     
@@ -302,10 +302,11 @@ export default class seeds extends Component {
   _finishRecording(didSucceed, filePath) {
     this.setState({ finished: didSucceed });
     console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
-    recordings.push(
+    recordings.unshift(
       { name: 'recording', 
         duration: this.state.currentTime, 
-        recordingPath: filePath
+        recordingPath: filePath,
+        created: Date.now()
       });
     this.setState({
       dataSource: ds.cloneWithRows(recordings),
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   listControls: {
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     flexDirection: 'row'
   },
 
