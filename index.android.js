@@ -17,6 +17,7 @@ import {
   Text,
   Alert,
   Button,
+  Dimensions,
   ListView,
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -37,6 +38,12 @@ const LISTLAYOUT = {
   GRID : "grid",
   LIST : "list"
 };
+
+const recordModalWidth = 200;
+const recordModalHeight = 200;
+const window = Dimensions.get('window');
+const recordModalTop = (window.height - recordModalHeight) / 2;
+const recordModalLeft = (window.width - recordModalWidth) / 2;
 
 // let recordings = [];
 let recordings = [
@@ -74,9 +81,12 @@ export default class seeds extends Component {
   }
 
   _renderRecordPanel() {
+
     return(
-      <View style={styles.recordPanel}>
-        <Text style={styles.timer}>{TimeFormatter(this.state.currentTime)}</Text>
+        <View style={styles.recordPanel}>
+          <Text style={styles.timer}>
+            {TimeFormatter(this.state.currentTime)}
+          </Text>
       </View>
     )
   }
@@ -160,19 +170,16 @@ export default class seeds extends Component {
   }
 
   render() {
+
     return (
       <View style={styles.container}>
-        <View style={styles.top}>
-          {this._renderTitle()}
-          {this._renderRecordPanel()}
-        </View>
-        <View style={styles.bottom}>
-          {!this.state.isRecording && this._renderRecordButton()}
-          {this.state.isRecording && this._renderStopButton()}
-          {this._renderListControls()}
-          {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
-          {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
-        </View>
+        {this._renderTitle()}
+        {!this.state.isRecording && this._renderRecordButton()}
+        {this.state.isRecording && this._renderStopButton()}
+        {this._renderListControls()}
+        {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
+        {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
+        {this.state.isRecording && this._renderRecordPanel()}
       </View>
     );
   }
@@ -300,6 +307,9 @@ export default class seeds extends Component {
       return filePath;
     } catch (error) {
       console.error(error);
+      this.setState({
+          isRecording: false,
+      });
     }
   }
 
@@ -330,24 +340,31 @@ const styles = StyleSheet.create({
   },
   header: {
     borderBottomWidth: 0.5,
-    paddingTop: 20,
+    paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: '#F9F9F9'
+    backgroundColor: 'green'
   },
 
   title: {
     alignSelf: 'center',
-    fontWeight: '600'
+    fontWeight: '600',
+    color: 'white'
   },
 
   recordPanel: {
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    flex: 1
+    position: 'absolute',
+    opacity: .8,
+    backgroundColor: '#ef553a',
+    borderRadius: 10,
+    width: recordModalWidth,
+    height: recordModalHeight,
+    top: recordModalTop,
+    left: recordModalLeft
   },
 
   timer: {
     fontSize: 20,
+    color: 'white',    
     fontWeight: '100',
     borderWidth: 0,
     alignSelf: 'center'

@@ -38,23 +38,34 @@ X newest audio should go in to the top left
 X record - display time in 00:00
 x record - change record button to Icon.button
 x record - tap once, will record and change to stop button
-record - long press (>1 s) will display cancel on top
-cancel - drag finger up, highlight cancel, let go will cancel
+x layout - display timer in non-modal pop-up 
+x layout - display icon for recording
 
+layout - record button on bottom
+record - display microphone icon in modal
 record - display recording details (bit rate, sample rate)
-record - display audio meter when recording
+
+grid layout 
+   -smaller grid item
+   -padding for content
+   -less padding between items
+   -duration + audio details in small text
+   -add icon next to name on top
+   -show how long ago created (2s ago)
+
+add menu icon 
+move list/grid toggle to menu
+error handling - no valid audio data recieved
+
+record - display audio meter when recording in modal
     http://developer.samsung.com/technical-doc/view.do;jsessionid=CD49A14903D73079243BF98A5567F7F0?v=T000000086
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
-record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
 
-separate record and list
-list - show how long ago created (2s ago)
-add delete, list view - swipe left (https://www.npmjs.com/package/react-native-swipe-list-view)
-delete should animate out
+
 edit - add rename
 edit - change icon
-play - highlight box/row on mouseover
+
 play - highlight box/row onPressDown
 play - highlight the box/row during playing
 add redux / refactor
@@ -62,10 +73,18 @@ add unit tests via jest
 add flow check vscode
 add persistence (redux middleware)
 UI - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
+work on ios
 
 # future
+record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
 minimize apk size
-work on ios
+record - long press (>1 s) will display cancel in non-modal
+cancel - drag finger up, highlight cancel, let go will cancel
 location - add gps support where recorded
 location - in SF, in CA, in China, Earth
 add payment support to buy 
+list - delete swipe left (https://www.npmjs.com/package/react-native-swipe-list-view)
+
+# research
+immutable vs redux
+https://www.npmjs.com/package/react-native-keyboard-spacer
