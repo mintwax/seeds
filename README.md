@@ -37,7 +37,7 @@ x add vector icons to project - toggle grid/list
 X newest audio should go in to the top left
 X record - display time in 00:00
 x record - change record button to Icon.button
-record - tap once, will record and change to stop button
+x record - tap once, will record and change to stop button
 record - long press (>1 s) will display cancel on top
 cancel - drag finger up, highlight cancel, let go will cancel
 

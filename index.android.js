@@ -55,7 +55,6 @@ export default class seeds extends Component {
 
       dataSource: ds.cloneWithRows(recordings),
       isRecording: false,
-      recordingDuration: 0,
       recordingStart: null,
       currentTime: 0.0,
       listLayout: LISTLAYOUT.GRID,
@@ -91,16 +90,28 @@ export default class seeds extends Component {
                 // underlayColor='#777'
                 delayPressIn={0.0}
                 delayPressOut={0.0}
-                onPressIn={this._startRecording.bind(this)}
-                onPressOut={this._stopRecording.bind(this)}
+                onPress={this._startRecording.bind(this)}
               >Record
           </MIcon.Button>
         </View>
     )
   }
 
+ _renderStopButton() {
+    return(
+       <View style={styles.recordButtonWrapper}>
+           <MIcon.Button name="stop-circle" backgroundColor="#3b5998" 
+                // style={styles.recordButton}
+                // underlayColor='#777'
+                delayPressIn={0.0}
+                delayPressOut={0.0}
+                onPress={this._stopRecording.bind(this)}
+              >Stop
+          </MIcon.Button>
+        </View>
+    )
+  }
   _renderList() {
-
     return(
       <ListView 
         enableEmptySections={true}
@@ -119,7 +130,6 @@ export default class seeds extends Component {
   }
 
   _renderGrid() {
-
     return(
       <ListView contentContainerStyle={styles.grid}
         enableEmptySections={true}
@@ -157,7 +167,8 @@ export default class seeds extends Component {
           {this._renderRecordPanel()}
         </View>
         <View style={styles.bottom}>
-          {this._renderRecordButton()}
+          {!this.state.isRecording && this._renderRecordButton()}
+          {this.state.isRecording && this._renderStopButton()}
           {this._renderListControls()}
           {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
           {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
@@ -264,18 +275,12 @@ export default class seeds extends Component {
         console.log('recording started for ' + filePath);
         this.setState({
           isRecording: true,
-          recordingDuration: 0,
           recordingStart: new Date()
         });
       } catch (error) {
         console.error(error);
       }
   
-      // this.interval = setInterval( () => {
-      //    this.setState({
-      //      recordingDuration: new Date() - this.state.recordingStart
-      //    })
-      // }, 100);
   }
 
   async _stopRecording() {
