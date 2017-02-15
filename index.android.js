@@ -86,16 +86,15 @@ export default class seeds extends Component {
 
     return(
        <View style={styles.recordButtonWrapper}>
-        <TouchableOpacity
-                style={styles.recordButton}
-                underlayColor='#777'
+           <MIcon.Button name="record" backgroundColor="#3b5998" 
+                // style={styles.recordButton}
+                // underlayColor='#777'
                 delayPressIn={0.0}
                 delayPressOut={0.0}
                 onPressIn={this._startRecording.bind(this)}
                 onPressOut={this._stopRecording.bind(this)}
-              >
-              <Text>Record</Text>
-          </TouchableOpacity>
+              >Record
+          </MIcon.Button>
         </View>
     )
   }

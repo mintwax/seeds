@@ -35,12 +35,13 @@ x genymotion+ui explorer
 x add toggle listview to gridview
 x add vector icons to project - toggle grid/list
 X newest audio should go in to the top left
-record - display time in 00:00
-record - display recording details (bit rate, sample rate)
-record - change record button to Icon.button
+X record - display time in 00:00
+x record - change record button to Icon.button
 record - tap once, will record and change to stop button
 record - long press (>1 s) will display cancel on top
 cancel - drag finger up, highlight cancel, let go will cancel
+
+record - display recording details (bit rate, sample rate)
 record - display audio meter when recording
     http://developer.samsung.com/technical-doc/view.do;jsessionid=CD49A14903D73079243BF98A5567F7F0?v=T000000086
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
