@@ -4,7 +4,7 @@
  * @flow
  */
 
-import TimeFormatter from 'minutes-seconds-milliseconds';
+import TimeFormatter from './app/lib/minutes-seconds';
 import uuid from 'uuid/v4';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -33,7 +33,7 @@ const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
 });
 
-const LISTLAYOUT = {
+const LISTLAYOUT = { 
   GRID : "grid",
   LIST : "list"
 };
@@ -77,7 +77,7 @@ export default class seeds extends Component {
   _renderRecordPanel() {
     return(
       <View style={styles.recordPanel}>
-        <Text style={styles.timer}>{this.state.currentTime}</Text>
+        <Text style={styles.timer}>{TimeFormatter(this.state.currentTime)}</Text>
       </View>
     )
   }
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
   },
 
   timer: {
-    fontSize: 60,
+    fontSize: 20,
     fontWeight: '100',
     borderWidth: 0,
     alignSelf: 'center'

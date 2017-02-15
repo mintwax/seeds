@@ -25,17 +25,17 @@
     }
   }
 
-  function convert(length) {
-    if(!length) {
-      return '00:00.00'
+  function convert(lengthSecs) {
+    if(!lengthSecs) {
+      return '00:00'
     }
 
-    var duration = moment.duration(length);
+    var duration = moment.duration(lengthSecs * 1000);
     var formattedDuration = '';
 
     formattedDuration += minutes(duration) + ':';
-    formattedDuration += seconds(duration) + '.';
-    formattedDuration += milliseconds(duration);
+    formattedDuration += seconds(duration);
+    // formattedDuration += milliseconds(duration);
 
     return formattedDuration;
   }
