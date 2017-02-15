@@ -40,8 +40,8 @@ x record - change record button to Icon.button
 x record - tap once, will record and change to stop button
 x layout - display timer in non-modal pop-up 
 x layout - display icon for recording
+x layout - record button on bottom
 
-layout - record button on bottom
 record - display microphone icon in modal
 record - display recording details (bit rate, sample rate)
 
@@ -62,7 +62,7 @@ record - display audio meter when recording in modal
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
-
+delete -
 edit - add rename
 edit - change icon
 

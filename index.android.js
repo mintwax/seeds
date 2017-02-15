@@ -174,11 +174,11 @@ export default class seeds extends Component {
     return (
       <View style={styles.container}>
         {this._renderTitle()}
-        {!this.state.isRecording && this._renderRecordButton()}
-        {this.state.isRecording && this._renderStopButton()}
         {this._renderListControls()}
         {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
         {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
+        {!this.state.isRecording && this._renderRecordButton()}
+        {this.state.isRecording && this._renderStopButton()}
         {this.state.isRecording && this._renderRecordPanel()}
       </View>
     );
