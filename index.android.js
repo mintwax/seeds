@@ -84,6 +84,8 @@ export default class seeds extends Component {
 
     return(
         <View style={styles.recordPanel}>
+           <MIcon name="microphone" size={90} color="white" >
+          </MIcon>
           <Text style={styles.timer}>
             {TimeFormatter(this.state.currentTime)}
           </Text>
@@ -359,7 +361,10 @@ const styles = StyleSheet.create({
     width: recordModalWidth,
     height: recordModalHeight,
     top: recordModalTop,
-    left: recordModalLeft
+    left: recordModalLeft,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   timer: {

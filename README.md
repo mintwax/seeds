@@ -41,9 +41,10 @@ x record - tap once, will record and change to stop button
 x layout - display timer in non-modal pop-up 
 x layout - display icon for recording
 x layout - record button on bottom
+x record - display microphone icon in modal
 
-record - display microphone icon in modal
-record - display recording details (bit rate, sample rate)
+add menu icon 
+move list/grid toggle to menu
 
 grid layout 
    -smaller grid item
@@ -53,8 +54,6 @@ grid layout
    -add icon next to name on top
    -show how long ago created (2s ago)
 
-add menu icon 
-move list/grid toggle to menu
 error handling - no valid audio data recieved
 
 record - display audio meter when recording in modal
@@ -62,10 +61,15 @@ record - display audio meter when recording in modal
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
-delete -
-edit - add rename
-edit - change icon
-
+delete - long press, drag to garbage icon, confirm message
+edit name - double tap name in icon, view keyboard
+edit icon - double tap icon, view icon picker
+record - long press (>1 s) will display cancel in non-modal
+cancel - drag finger up, highlight cancel, let go will cancel
+grouping - drag onto another grid item will group into collection
+draw collection - use icon/color/shape to differentiate collection
+click on collection - will navigate to collection, same record icons, back button in title
+    display collection name somwere
 play - highlight box/row onPressDown
 play - highlight the box/row during playing
 add redux / refactor
@@ -78,12 +82,11 @@ work on ios
 # future
 record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
 minimize apk size
-record - long press (>1 s) will display cancel in non-modal
-cancel - drag finger up, highlight cancel, let go will cancel
 location - add gps support where recorded
 location - in SF, in CA, in China, Earth
 add payment support to buy 
 list - delete swipe left (https://www.npmjs.com/package/react-native-swipe-list-view)
+record - display recording details (bit rate, sample rate)
 
 # research
 immutable vs redux
