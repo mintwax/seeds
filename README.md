@@ -2,7 +2,7 @@
 
 React-native app that records and plays audio files.
 
-# dev notes
+# dev tooling notes
 
 Setting up react-native development on Windows 7
 
@@ -34,20 +34,37 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 x genymotion+ui explorer
 x add toggle listview to gridview
 x add vector icons to project - toggle grid/list
-newest audio should go in to the top left
-newest audio should show animation (fade in, rest shift right)
-add delete, list view - swipe left
-add redux / refactor
+X newest audio should go in to the top left
+record - display time in 00:00
+record - display recording details (bit rate, sample rate)
+record - change record button to Icon.button
+record - tap once, will record and change to stop button
+record - long press (>1 s) will display cancel on top
+cancel - drag finger up, highlight cancel, let go will cancel
+record - display audio meter when recording
+    http://developer.samsung.com/technical-doc/view.do;jsessionid=CD49A14903D73079243BF98A5567F7F0?v=T000000086
+    http://stackoverflow.com/questions/14181449/android-detect-sound-level
+    https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
+record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
+
+separate record and list
+list - show how long ago created (2s ago)
+add delete, list view - swipe left (https://www.npmjs.com/package/react-native-swipe-list-view)
+delete should animate out
 edit - add rename
 edit - change icon
 play - highlight box/row on mouseover
 play - highlight box/row onPressDown
 play - highlight the box/row during playing
+add redux / refactor
 add unit tests via jest
 add flow check vscode
-add persistence
+add persistence (redux middleware)
+UI - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
+
+# future
 minimize apk size
 work on ios
-
-add gps support to indicate location where recorded
+location - add gps support where recorded
+location - in SF, in CA, in China, Earth
 add payment support to buy 
