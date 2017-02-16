@@ -42,9 +42,7 @@ x layout - display timer in non-modal pop-up
 x layout - display icon for recording
 x layout - record button on bottom
 x record - display microphone icon in modal
-
-add menu icon 
-move list/grid toggle to menu
+x add menu icon move list/grid toggle to menu (http://cmichel.io/how-to-create-a-more-popup-menu-in-react-native/)
 
 grid layout 
    -smaller grid item
@@ -53,6 +51,8 @@ grid layout
    -duration + audio details in small text
    -add icon next to name on top
    -show how long ago created (2s ago)
+
+fix color theme
 
 error handling - no valid audio data recieved
 

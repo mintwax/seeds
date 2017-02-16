@@ -9,6 +9,7 @@ import uuid from 'uuid/v4';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import PopupMenu from './app/components/PopupMenu';
 
 import React, { Component } from 'react';
 import {
@@ -24,7 +25,7 @@ import {
   TouchableHighlight,
   View,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
 } from 'react-native';
 
 import Sound from 'react-native-sound';
@@ -72,10 +73,25 @@ export default class seeds extends Component {
     return AudioUtils.DocumentDirectoryPath + '/' + uuid() + '.aac'
   }
 
-  _renderTitle() {
+  _onPopupMenuEvent = (eventName, index) => {
+
+    if (eventName == 'itemSelected') {
+      if (index == 0) {
+        this._toggleListLayout(LISTLAYOUT.LIST);
+      } else if (index == '1') {
+        // grid view
+        this._toggleListLayout(LISTLAYOUT.GRID);
+      }
+    }
+  
+  }
+
+
+  _renderTitleBar() {
     return(
-      <View style={styles.header}>
+      <View style={styles.titleBar}>
         <Text style={styles.title}>Seeds</Text>
+        <PopupMenu actions={['List view', 'Grid view']} onPress={this._onPopupMenuEvent} />
       </View>
     );
   }
@@ -175,8 +191,8 @@ export default class seeds extends Component {
 
     return (
       <View style={styles.container}>
-        {this._renderTitle()}
-        {this._renderListControls()}
+        {this._renderTitleBar()}
+        {/*{this._renderListControls()}*/}
         {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
         {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
         {!this.state.isRecording && this._renderRecordButton()}
@@ -340,11 +356,15 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
   },
-  header: {
-    borderBottomWidth: 0.5,
+
+  titleBar: {
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: 'green'
+    paddingRight: 10,
+    paddingLeft: 10,
+    backgroundColor: '#1B5E20',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
 
   title: {
@@ -356,7 +376,8 @@ const styles = StyleSheet.create({
   recordPanel: {
     position: 'absolute',
     opacity: .8,
-    backgroundColor: '#ef553a',
+    //backgroundColor: '#ef553a',
+    backgroundColor: '#8BC34A',
     borderRadius: 10,
     width: recordModalWidth,
     height: recordModalHeight,
