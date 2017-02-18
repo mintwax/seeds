@@ -7,8 +7,8 @@
 import TimeFormatter from './app/lib/minutes-seconds';
 import uuid from 'uuid/v4';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ActionButton from 'react-native-action-button';
 import PopupMenu from './app/components/PopupMenu';
 import GridView from './app/components/GridView';
 
@@ -97,8 +97,8 @@ export default class seeds extends Component {
 
     return(
         <View style={styles.recordPanel}>
-           <MIcon name="microphone" size={90} color="white" >
-          </MIcon>
+           <Icon name="microphone" size={90} color="white" >
+          </Icon>
           <Text style={styles.recordTimer}>
             {TimeFormatter(this.state.currentTime)}
           </Text>
@@ -106,34 +106,15 @@ export default class seeds extends Component {
     )
   }
 
-  _renderRecordButton() {
+  _renderButton(props) {
 
     return(
-       <View style={styles.recordButtonWrapper}>
-           <MIcon.Button name="record" backgroundColor="#3b5998" 
-                style={styles.recordButton}
-                // underlayColor='#777'
-                delayPressIn={0.0}
-                delayPressOut={0.0}
-                onPress={this._startRecording.bind(this)}
-              >Record
-          </MIcon.Button>
-        </View>
-    )
-  }
-
- _renderStopButton() {
-    return(
-       <View style={styles.recordButtonWrapper}>
-           <MIcon.Button name="stop-circle" backgroundColor="#3b5998" 
-                style={styles.recordButton}
-                // underlayColor='#777'
-                delayPressIn={0.0}
-                delayPressOut={0.0}
-                onPress={this._stopRecording.bind(this)}
-              >Stop
-          </MIcon.Button>
-        </View>
+      <ActionButton
+        position="center"
+        buttonColor="rgb(49,81,181)"
+        icon={<Icon name={props.iconName} style={styles.actionButtonIcon}/>}
+        onPress={props.onPress.bind(this)}
+      />
     )
   }
 
@@ -181,8 +162,12 @@ export default class seeds extends Component {
         {/*{this._renderListControls()}*/}
         {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
         {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
-        {!this.state.isRecording && this._renderRecordButton()}
-        {this.state.isRecording && this._renderStopButton()}
+        {!this.state.isRecording && this._renderButton({ displayText: "Record", 
+                                                        iconName: 'record',
+                                                        onPress: this._startRecording })}
+        {this.state.isRecording && this._renderButton({ displayText: "Stop", 
+                                                        iconName: 'stop',
+                                                        onPress: this._stopRecording })}
         {this.state.isRecording && this._renderRecordPanel()}
       </View>
     );
@@ -383,19 +368,19 @@ const styles = StyleSheet.create({
   },
   
   recordButtonWrapper: {
+    position: 'absolute',
     flexDirection: 'row',
+    bottom: 10,
+    left: recordModalLeft,
     justifyContent: 'space-around',
     paddingTop: 15,
     paddingBottom: 15,
   },
 
-  recordButton: {
-    height:100,
-    width: 100,
-    // borderRadius: 60,
-    // backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
+  actionButtonIcon: {
+    fontSize:30,
+    //height: 22,
+    color: 'white'
   },
 
   recordingRow: {

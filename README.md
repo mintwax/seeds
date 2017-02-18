@@ -34,7 +34,6 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 x test scaling with lots of items
 add created (2s ago), display in grid under duration
 record button is floating on top of everything
-record button can be moved around
 
 long press - item is selected, then can multi select other items, 'delete', 'share', 'edit' actions show up
 edit is disabled if multi items selected
