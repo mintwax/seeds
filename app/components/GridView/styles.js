@@ -7,7 +7,8 @@ module.exports = StyleSheet.create({
   grid: {
     justifyContent: 'flex-start',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    // backgroundColor: 'tan',
   },
 
   gridItem: {

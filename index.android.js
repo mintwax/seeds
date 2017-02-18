@@ -48,14 +48,8 @@ const recordModalTop = (window.height - recordModalHeight) / 2;
 const recordModalLeft = (window.width - recordModalWidth) / 2;
 
 // let recordings = [];
-let recordings = [
-  { name: "recording-6 long name with spaces that overflows out of boundary", duration: 2, created: Date.now() - 8000 },
-  { name: "recording-5", duration: 20, created: Date.now() - 7000 },
-  { name: "", duration: 15, created: Date.now() - 6000 },
-  { name: "recording-3", duration: 7, created: Date.now() - 5000 },
-  { name: "recording-2", duration: 4.5, created: Date.now() - 4000 },
-  { name: "recording-1", duration: 6, created: Date.now() - 3000 },
-]
+import recordings from './app/mock/recordings'
+
 export default class seeds extends Component {
     
   constructor(props) {
@@ -68,6 +62,8 @@ export default class seeds extends Component {
       currentTime: 0.0,
       listLayout: LISTLAYOUT.GRID,
     };
+
+    // alert(this.state.dataSource.getRowCount());
   }
 
   _getNewAudioPath() {
@@ -103,7 +99,7 @@ export default class seeds extends Component {
         <View style={styles.recordPanel}>
            <MIcon name="microphone" size={90} color="white" >
           </MIcon>
-          <Text style={styles.timer}>
+          <Text style={styles.recordTimer}>
             {TimeFormatter(this.state.currentTime)}
           </Text>
       </View>
@@ -115,7 +111,7 @@ export default class seeds extends Component {
     return(
        <View style={styles.recordButtonWrapper}>
            <MIcon.Button name="record" backgroundColor="#3b5998" 
-                // style={styles.recordButton}
+                style={styles.recordButton}
                 // underlayColor='#777'
                 delayPressIn={0.0}
                 delayPressOut={0.0}
@@ -130,7 +126,7 @@ export default class seeds extends Component {
     return(
        <View style={styles.recordButtonWrapper}>
            <MIcon.Button name="stop-circle" backgroundColor="#3b5998" 
-                // style={styles.recordButton}
+                style={styles.recordButton}
                 // underlayColor='#777'
                 delayPressIn={0.0}
                 delayPressOut={0.0}
@@ -378,7 +374,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  timer: {
+  recordTimer: {
     fontSize: 20,
     color: 'white',    
     fontWeight: '100',
@@ -386,24 +382,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   
-  top: {
-    flex: 1,
-  },
-  bottom: {
-    flex: 2,
-    backgroundColor: '#F0EFF5'
-  },
   recordButtonWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingTop: 15,
-    paddingBottom: 30
+    paddingBottom: 15,
   },
+
   recordButton: {
-    height:80,
-    width: 80,
-    borderRadius: 40,
-    backgroundColor: '#fff',
+    height:100,
+    width: 100,
+    // borderRadius: 60,
+    // backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center'
   },

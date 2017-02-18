@@ -31,29 +31,17 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-x genymotion+ui explorer
-x add toggle listview to gridview
-x add vector icons to project - toggle grid/list
-X newest audio should go in to the top left
-X record - display time in 00:00
-x record - change record button to Icon.button
-x record - tap once, will record and change to stop button
-x layout - display timer in non-modal pop-up 
-x layout - display icon for recording
-x layout - record button on bottom
-x record - display microphone icon in modal
-x add menu icon move list/grid toggle to menu (http://cmichel.io/how-to-create-a-more-popup-menu-in-react-native/)
-
-x grid layout 
-   X smaller grid item
-   X padding for content
-   -X ess padding between items
-   X duration + audio details in small text
-
+x test scaling with lots of items
 add created (2s ago), display in grid under duration
+record button is floating on top of everything
+record button can be moved around
 
-fix color theme
-?? add icons next to name on top
+long press - item is selected, then can multi select other items, 'delete', 'share', 'edit' actions show up
+edit is disabled if multi items selected
+delete action pressed - modal slides up from bottom to confirm 'Cancel', 'OK'
+edit action pressed - navigate to Edit Recording page
+Edit Recording page - has back button
+
 grid - ellipses for long recording name
 error handling - no valid audio data recieved
 
@@ -62,9 +50,6 @@ record - display audio meter when recording in modal
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
-delete - long press, drag to garbage icon, confirm message
-edit name - double tap name in icon, view keyboard
-edit icon - double tap icon, view icon picker
 record - long press (>1 s) will display cancel in non-modal
 cancel - drag finger up, highlight cancel, let go will cancel
 grouping - drag onto another grid item will group into collection
@@ -73,7 +58,7 @@ click on collection - will navigate to collection, same record icons, back butto
     display collection name somwere
 play - highlight box/row onPressDown
 play - highlight the box/row during playing
-add redux / refactor
+add redux / refactor (record button, which screen)
 add unit tests via jest
 add flow check vscode
 add persistence (redux middleware)
@@ -95,3 +80,25 @@ import sample from url
 # research
 immutable vs redux
 https://www.npmjs.com/package/react-native-keyboard-spacer
+
+
+# archive
+
+x genymotion+ui explorer
+x add toggle listview to gridview
+x add vector icons to project - toggle grid/list
+X newest audio should go in to the top left
+X record - display time in 00:00
+x record - change record button to Icon.button
+x record - tap once, will record and change to stop button
+x layout - display timer in non-modal pop-up 
+x layout - display icon for recording
+x layout - record button on bottom
+x record - display microphone icon in modal
+x add menu icon move list/grid toggle to menu (http://cmichel.io/how-to-create-a-more-popup-menu-in-react-native/)
+
+x grid layout 
+   X smaller grid item
+   X padding for content
+   -X ess padding between items
+   X duration + audio details in small text

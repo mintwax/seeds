@@ -18,7 +18,7 @@ export default class GridView extends Component {
   }
 
   constructor (props) {
-    super(props)
+    super(props);
   }
   
   render() { 
@@ -26,6 +26,7 @@ export default class GridView extends Component {
       <ListView contentContainerStyle={styles.grid}
         enableEmptySections={true}
         dataSource={this.props.dataSource}
+        // renderFooter={ () =>  { return (<Text>{this.props.dataSource.getRowCount()} rows</Text>)}} 
         renderRow={ (rowData) => (
           <TouchableWithoutFeedback
               onPress={this.props.onPress.bind(this, rowData.recordingPath)}>
@@ -39,3 +40,6 @@ export default class GridView extends Component {
   )
   }
 }
+
+
+          
