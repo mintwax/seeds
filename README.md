@@ -44,16 +44,17 @@ x layout - record button on bottom
 x record - display microphone icon in modal
 x add menu icon move list/grid toggle to menu (http://cmichel.io/how-to-create-a-more-popup-menu-in-react-native/)
 
-grid layout 
-   -smaller grid item
-   -padding for content
-   -less padding between items
-   -duration + audio details in small text
-   -add icon next to name on top
-   -show how long ago created (2s ago)
+x grid layout 
+   X smaller grid item
+   X padding for content
+   -X ess padding between items
+   X duration + audio details in small text
+
+add created (2s ago), display in grid under duration
 
 fix color theme
-
+?? add icons next to name on top
+grid - ellipses for long recording name
 error handling - no valid audio data recieved
 
 record - display audio meter when recording in modal
@@ -87,6 +88,9 @@ location - in SF, in CA, in China, Earth
 add payment support to buy 
 list - delete swipe left (https://www.npmjs.com/package/react-native-swipe-list-view)
 record - display recording details (bit rate, sample rate)
+export data to dropbox, google drive
+import data from dropbox, google drive
+import sample from url
 
 # research
 immutable vs redux

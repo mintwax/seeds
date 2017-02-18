@@ -10,6 +10,7 @@ import uuid from 'uuid/v4';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PopupMenu from './app/components/PopupMenu';
+import GridView from './app/components/GridView';
 
 import React, { Component } from 'react';
 import {
@@ -48,9 +49,9 @@ const recordModalLeft = (window.width - recordModalWidth) / 2;
 
 // let recordings = [];
 let recordings = [
-  { name: "recording-6", duration: 2, created: Date.now() - 8000 },
+  { name: "recording-6 long name with spaces that overflows out of boundary", duration: 2, created: Date.now() - 8000 },
   { name: "recording-5", duration: 20, created: Date.now() - 7000 },
-  { name: "recording-4", duration: 15, created: Date.now() - 6000 },
+  { name: "", duration: 15, created: Date.now() - 6000 },
   { name: "recording-3", duration: 7, created: Date.now() - 5000 },
   { name: "recording-2", duration: 4.5, created: Date.now() - 4000 },
   { name: "recording-1", duration: 6, created: Date.now() - 3000 },
@@ -139,6 +140,7 @@ export default class seeds extends Component {
         </View>
     )
   }
+
   _renderList() {
     return(
       <ListView 
@@ -159,19 +161,7 @@ export default class seeds extends Component {
 
   _renderGrid() {
     return(
-      <ListView contentContainerStyle={styles.grid}
-        enableEmptySections={true}
-        dataSource={this.state.dataSource}
-        renderRow={ (rowData) => (
-            <TouchableWithoutFeedback
-                onPress={this._playRecording.bind(this, rowData.recordingPath)}>
-              <View style={ styles.gridItem }>
-                <Text style={styles.recordingName}>{rowData.name}</Text>
-                <Text style={styles.recordingDuration}>{TimeFormatter(rowData.duration)}</Text>
-              </View>
-           </TouchableWithoutFeedback>
-        )}  
-      />
+      <GridView dataSource={this.state.dataSource} onPress={this._playRecording.bind(this)}/>
     )
   }
 
@@ -417,22 +407,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  listControls: {
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
 
-  grid: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  },
-  gridItem: {
-       backgroundColor: '#CCC',
-        margin: 10,
-        width: 100,
-        height: 100
-  },
   recordingRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -441,6 +416,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: '#ddd'
   },
+
   recordingName: {
     fontSize: 16,
     color: '#777'
