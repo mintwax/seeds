@@ -63,7 +63,6 @@ export default class seeds extends Component {
       listLayout: LISTLAYOUT.GRID,
     };
 
-    // alert(this.state.dataSource.getRowCount());
   }
 
   _getNewAudioPath() {
@@ -241,44 +240,37 @@ export default class seeds extends Component {
 
     var recordingPath = recording.recordingPath;
     var recordingDuration = recording.duration;
-    clearTimeout(recording.loadTimer);
-    clearTimeout(recording.playTimer);
     clearInterval(recording.playProgressInterval);
 
-    recording.loadTimer = setTimeout( () => {
-      var sound = new Sound(recordingPath, '', (error) => {
-        if (error) {
-          console.log('failed to load the sound', error);
-          return;
+    var sound = new Sound(recordingPath, '', (error) => {
+      if (error) {
+        Alert.alert('Unable to play', 'Failed to load the recording: ' + recordingPath);
+        return;
+      }
+      
+      sound.play((success) => {
+
+        clearInterval(recording.playProgressInterval);
+        
+        if (success) {
+          recording.playProgress = 1;
+        } else {
+          Alert.alert('Unable to play', 'playback failed due to audio decoding errors');
         }
-      });
 
-      recording.playTimer = setTimeout(() => {
-        sound.play((success) => {
-
-          clearInterval(recording.playProgressInterval);
-          
-          if (success) {
-            console.log('successfully finished playing');
-            recording.isPlaying = false;
-            recording.playProgress = 1;
-            this.setState({
-              dataSource: ds.cloneWithRows(recordings)
-            })
-           } else {
-             console.log('playback failed due to audio decoding errors');
-           }
-
-           sound.release();
-        });
-
-        recording.isPlaying = true;
-        recording.playProgress = 0;
+        recording.isPlaying = false;
         this.setState({
           dataSource: ds.cloneWithRows(recordings)
         })
-      }, 100);
+        sound.release();
+      });
 
+      recording.isPlaying = true;
+      recording.playProgress = 0;
+      this.setState({
+        dataSource: ds.cloneWithRows(recordings)
+      })
+     
       recording.playProgressInterval = setInterval( () => {
       
         sound.getCurrentTime((curSecs) => {
@@ -291,8 +283,7 @@ export default class seeds extends Component {
           })
         });
       }, 500);
-
-    }, 100);
+    })
   }
 
   async _startRecording() {

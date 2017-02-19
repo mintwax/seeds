@@ -35,8 +35,10 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 x remove the warning for indeterminate progress bar - https://github.com/facebook/react-native/pull/11791/commits/d336518bcbdb59128ec74f486953fce8750324ce
 x grid layout needs to be tighter, less spaces
 x grid item needs more padding inside
+x error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
 
-error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
+progress bar should changed size of the grid item
+progress bar should align-self: flex-end
 
 long press item to select grid item
     hide record button 
