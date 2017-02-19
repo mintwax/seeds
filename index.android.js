@@ -164,7 +164,7 @@ export default class seeds extends Component {
         {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
         {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
         {!this.state.isRecording && this._renderButton({ displayText: "Record", 
-                                                        iconName: 'record',
+                                                        iconName: 'microphone',
                                                         onPress: this._startRecording })}
         {this.state.isRecording && this._renderButton({ displayText: "Stop", 
                                                         iconName: 'stop',
