@@ -1,6 +1,7 @@
 # seeds
 
-React-native app that records and plays audio files.
+React-native app that captures your song ideas at the moment of inspiration so 
+you never forget a tune that you had in your head.
 
 # dev tooling notes
 
@@ -32,37 +33,63 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 # todo
 
 x test scaling with lots of items
+x record button is floating on top of everything
+
 add created (2s ago), display in grid under duration
-record button is floating on top of everything
 
-long press - item is selected, then can multi select other items, 'delete', 'share', 'edit' actions show up
-edit is disabled if multi items selected
-delete action pressed - modal slides up from bottom to confirm 'Cancel', 'OK'
-edit action pressed - navigate to Edit Recording page
-Edit Recording page - has back button
+play should display play progress as a progress bar in grid item
 
-grid - ellipses for long recording name
-error handling - no valid audio data recieved
+long press item to select grid item
+    hide record button 
+    show edit | delete | share | add to playlist
 
+# FEATURE - edit 
+edit action pressed - popup edit page
+    general tab
+      name - textfield
+      created - datetime picker
+      notes - text area
+      background - choose photo|color
+      show audio details
+      tags
+
+# FEATURE - filter bar
+search icon in the title bar
+click search icon it expands to text field 
+typing in text field does realtime filtering on grid
+saves the text typed in as history 
+history is displayed for user to select
+
+# FEATURE - delete
+
+# FEATURE - share
+
+# non-functional 
+
+add redux / refactor (record button, which screen)
+add unit tests via jest
+add flow check vscode
+add persistence (redux middleware)
+
+# FEATURE - audio meter
 record - display audio meter when recording in modal
     http://developer.samsung.com/technical-doc/view.do;jsessionid=CD49A14903D73079243BF98A5567F7F0?v=T000000086
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
-record - long press (>1 s) will display cancel in non-modal
-cancel - drag finger up, highlight cancel, let go will cancel
-grouping - drag onto another grid item will group into collection
-draw collection - use icon/color/shape to differentiate collection
-click on collection - will navigate to collection, same record icons, back button in title
-    display collection name somwere
-play - highlight box/row onPressDown
-play - highlight the box/row during playing
-add redux / refactor (record button, which screen)
-add unit tests via jest
-add flow check vscode
-add persistence (redux middleware)
-UI - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
+
+
+# UI niceties
+animation - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
 work on ios
+icon - add icon to menu drop down
+
+# FEATURE - playlists (like albums)
+left side - pull out tab (default is all)
+under that is list of playlists (songs)
+can group recordings into playlists
+add to - list of playlists or 'Create...'
+
 
 # future
 record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
@@ -70,11 +97,14 @@ minimize apk size
 location - add gps support where recorded
 location - in SF, in CA, in China, Earth
 add payment support to buy 
-list - delete swipe left (https://www.npmjs.com/package/react-native-swipe-list-view)
 record - display recording details (bit rate, sample rate)
 export data to dropbox, google drive
 import data from dropbox, google drive
 import sample from url
+record - long press (>1 s) will display cancel in non-modal
+cancel - drag finger up, highlight cancel, let go will cancel
+FEATURE - export
+FEATURE - sync to cloud / backup
 
 # research
 immutable vs redux

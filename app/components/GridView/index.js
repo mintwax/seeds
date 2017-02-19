@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import styles from './styles';
+import moment from 'moment';
 import TimeFormatter from '../../lib/minutes-seconds';
 
 export default class GridView extends Component {
@@ -33,6 +34,7 @@ export default class GridView extends Component {
             <View style={ styles.gridItem }>
               <Text style={styles.gridName}>{rowData.name}</Text>
               <Text style={styles.gridDuration}>{TimeFormatter(rowData.duration)}</Text>
+              <Text style={styles.gridCreated}>{moment.duration(rowData.created - moment()).humanize()} ago</Text>
             </View>
           </TouchableWithoutFeedback>
         )}

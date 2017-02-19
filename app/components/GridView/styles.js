@@ -32,5 +32,10 @@ module.exports = StyleSheet.create({
     color: '#000',
     fontSize: 12,
     fontWeight: '300'
+  },
+
+  gridCreated: {
+    color: '#777',
+    fontSize: 12,
   }
 });

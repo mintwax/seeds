@@ -1,19 +1,53 @@
 
+import moment from 'moment'
 
-module.exports = [
-  { name: "recording-6 long name with spaces that overflows out of boundary", duration: 2, created: Date.now() - 8000 },
-  { name: "recording-5", duration: 20, created: Date.now() - 7000 },
-  { name: "recording-5", duration: 20, created: Date.now() - 7000 },
-  { name: "", duration: 15, created: Date.now() - 6000 },
-  { name: "recording-3", duration: 7, created: Date.now() - 5000 },
-  { name: "recording-2", duration: 4.5, created: Date.now() - 4000 },
-  { name: "recording-1", duration: 6, created: Date.now() - 3000 },
-  { name: "recording-33", duration: 7, created: Date.now() - 5000 },
-  { name: "recording-25", duration: 4.5, created: Date.now() - 4000 },
-  { name: "recording-16", duration: 6, created: Date.now() - 3000 },
-  { name: "recording-37", duration: 7, created: Date.now() - 5000 },
-  { name: "recording-20", duration: 4.6, created: Date.now() - 4000 },
-  { name: "recording-???", duration: 4.5, created: Date.now() - 4000 },
-  { name: "recording-xxx", duration: 4.5, created: Date.now() - 4000 },
-  { name: "recording-yyy", duration: 4.5, created: Date.now() - 4000 },
+module.exports = [ { 
+    name: "recording-6 long name with spaces that overflows out of boundary", 
+    duration: 2, 
+    created: moment().add(1, 'days') 
+  }, { 
+    name: "recording-50", 
+    duration: 20, 
+    created: moment().add(2, 'days').add(3, 'hours').add(5, 'seconds')
+  }, { 
+    name: "recording-5", 
+    duration: 20, 
+    created: moment().add(2, 'days').add(3, 'hours').add(30, 'seconds')
+  }, { 
+    name: "", 
+    duration: 15, 
+    created: moment().add(2, 'days').add(3, 'hours').add(30, 'seconds')
+  }, { 
+    name: "", 
+    duration: 7, 
+    created: moment().add(2, 'days').add(3, 'hours').add(30, 'seconds')
+  }, { 
+    name: "recording-37", 
+    duration: 200, 
+    created: moment().add(2, 'days').add(17, 'hours').add(30, 'seconds')
+  }, { 
+    name: "songs for jujubee", 
+    duration: 100, 
+    created: moment().add(12, 'days').add(3, 'hours').add(30, 'seconds')
+  }, { 
+    name: "jungle bells", 
+    duration: 70, 
+    created: moment().add(22, 'days').add(3, 'hours').add(30, 'seconds')
+  }, { 
+    name: "kfc is what its all about", 
+    duration: 17, 
+    created: moment().add(102, 'days').add(8, 'hours').add(3, 'seconds')
+  }, { 
+    name: "recording-16", 
+    duration: 6, 
+    created: moment().add(222, 'days').add(18, 'hours').add(2, 'seconds')
+  }, { 
+    name: "recording-37", 
+    duration: 7, 
+    created: moment().add(1000, 'days').add(80, 'hours').add(13, 'seconds')
+  }, { 
+    name: "recording-20", 
+    duration: 4.6, 
+    created: moment().add(2, 'years').add(8, 'hours').add(9, 'seconds')
+  }
 ]
