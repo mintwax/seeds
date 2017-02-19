@@ -35,7 +35,7 @@ export default class GridView extends Component {
             <View style={ styles.gridItem }>
               <Text style={styles.gridName}>{rowData.name}</Text>
               <Text style={styles.gridDuration}>{TimeFormatter(rowData.duration)}</Text>
-              <Text style={styles.gridCreated}>{moment.duration(rowData.created - moment()).humanize()} ago</Text>
+              {/*<Text style={styles.gridCreated}>{moment.duration(rowData.created - moment()).humanize()} ago</Text>*/}
               {rowData.isPlaying && <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} color="blue" progress={rowData.playProgress} {...this.props}/>}
             </View>
           </TouchableWithoutFeedback>

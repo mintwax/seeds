@@ -360,7 +360,7 @@ export default class seeds extends Component {
               + 'number of channels: ' + sound.getNumberOfChannels());
               
       // store info for listing
-      recordings.unshift( { name: 'recording', 
+      recordings.unshift( { name: '', 
                             duration: sound.getDuration(),
                             recordingPath: filePath,
                             created: moment()

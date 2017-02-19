@@ -32,32 +32,27 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-x test scaling with lots of items
-x record button is floating on top of everything
-x add created (2s ago), display in grid under duration
-x play should display play progress as a progress bar in grid item
-x don't show progress bar if not playing
+x remove the warning for indeterminate progress bar - https://github.com/facebook/react-native/pull/11791/commits/d336518bcbdb59128ec74f486953fce8750324ce
+x grid layout needs to be tighter, less spaces
+x grid item needs more padding inside
 
-remove the warning for indeterminate progress bar
-fix the delay problem with android
-
-error handling - if filepath doesn't exist don't RSOD, display toast
-try catch on 248 when loading the sound file
+error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
 
 long press item to select grid item
     hide record button 
-    show edit | delete | share | add to playlist
+    show edit | delete | share | add-to - as FAB
+    use native base?
 
 # FEATURE - edit 
-edit action pressed - popup edit page
-    general tab
-      name - textfield
-      created - datetime picker
-      notes - text area
-      background - choose photo|color
-      show audio details (size, filepath)
-      tags
-
+edit action pressed - navigate to edit page
+edit name - textfield
+edit created - datetime picker
+edit notes - text area
+edit tags - support autocompletion based on history
+edit background color
+add icon (picker - how to choose)
+back button go back to list
+cancel and ok button
 
 # FEATURE - filter bar
 search icon in the title bar
@@ -84,6 +79,10 @@ new recordings also get loaded into cache
 cache size is 10 recordings or XMB?
 remember whats in the cache and pre-load when loading the app
 
+# FEATURE - grid display customization
+simple view - name, if name empty display icon, if icon empty then nothing
+detailed view - default (name, duration, created)
+
 # FEATURE - audio meter
 record - display audio meter when recording in modal
     http://developer.samsung.com/technical-doc/view.do;jsessionid=CD49A14903D73079243BF98A5567F7F0?v=T000000086
@@ -91,12 +90,11 @@ record - display audio meter when recording in modal
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
 
-# UI niceties
+# UI enhancements
 animation - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
 work on ios
 icon - add icon to menu drop down
 recording name ellipse if exceed 20 characters
-
 
 # future
 record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
@@ -148,6 +146,11 @@ x grid layout
    -X ess padding between items
    X duration + audio details in small text
 
+x test scaling with lots of items
+x record button is floating on top of everything
+x add created (2s ago), display in grid under duration
+x play should display play progress as a progress bar in grid item
+x don't show progress bar if not playing
 
 
 # reactions to react and javascript stack

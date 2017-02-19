@@ -8,17 +8,19 @@ module.exports = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    flex: 1
     // backgroundColor: 'tan',
   },
 
   gridItem: {
        backgroundColor: '#CCC',
-        margin: 10,
+        marginLeft: 5,
+        marginTop: 5,
         // width: 100,
         height: 70,
-        paddingTop: 5,
-        paddingLeft: 5,
-        paddingRight: 5,
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         paddingBottom: 10,
         borderRadius: 10,
   },
