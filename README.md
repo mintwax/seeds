@@ -37,7 +37,7 @@ x grid layout needs to be tighter, less spaces
 x grid item needs more padding inside
 x error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
 
-progress bar should changed size of the grid item
+progress bar should not changed size of the grid item
 progress bar should align-self: flex-end
 
 long press item to select grid item
