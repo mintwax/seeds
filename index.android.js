@@ -4,9 +4,10 @@
  * @flow
  */
 
-import TimeFormatter from './app/lib/minutes-seconds';
 import uuid from 'uuid/v4';
+import moment from 'moment'
 
+import TimeFormatter from './app/lib/minutes-seconds';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from 'react-native-action-button';
 import PopupMenu from './app/components/PopupMenu';
@@ -29,7 +30,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import Sound from 'react-native-sound';
+import {default as Sound} from 'react-native-sound';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
 const ds = new ListView.DataSource({
@@ -51,14 +52,13 @@ const recordModalLeft = (window.width - recordModalWidth) / 2;
 import recordings from './app/mock/recordings'
 
 export default class seeds extends Component {
-    
+
   constructor(props) {
     super(props);
     this.state = {
 
       dataSource: ds.cloneWithRows(recordings),
       isRecording: false,
-      recordingStart: null,
       currentTime: 0.0,
       listLayout: LISTLAYOUT.GRID,
     };
@@ -118,6 +118,7 @@ export default class seeds extends Component {
     )
   }
 
+  /* !!!! DONT MODIFY THIS OBSOLETE CODE */
   _renderList() {
     return(
       <ListView 
@@ -125,7 +126,7 @@ export default class seeds extends Component {
         dataSource={this.state.dataSource}
         renderRow={ (rowData) => (
             <TouchableWithoutFeedback
-                onPress={this._playRecording.bind(this, rowData.recordingPath)}>
+                onPress={this._playRecording.bind(this, rowData)}>
               <View style={ styles.recordingRow }>
                 <Text style={styles.recordingName}>{rowData.name}</Text>
                 <Text style={styles.recordingDuration}>{TimeFormatter(rowData.duration)}</Text>
@@ -224,7 +225,6 @@ export default class seeds extends Component {
       };
 
       AudioRecorder.onFinished = (data) => {
-        
         // Android callback comes in the form of a promise instead.
           if (Platform.OS === 'ios') {
             this._finishRecording(data.status === "OK", data.audioFileURL);
@@ -233,24 +233,67 @@ export default class seeds extends Component {
     });
   }
 
-  _playRecording(recordingPath) {
+  componentWillUnmount() {
+    // TODO - track all the playings and clear the timeouts and intervals
+  }
 
+  _playRecording(recording) {
+
+    var recordingPath = recording.recordingPath;
+    var recordingDuration = recording.duration;
+    clearTimeout(recording.loadTimer);
+    clearTimeout(recording.playTimer);
+    clearInterval(recording.playProgressInterval);
+
+    recording.loadTimer = setTimeout( () => {
       var sound = new Sound(recordingPath, '', (error) => {
         if (error) {
           console.log('failed to load the sound', error);
+          return;
         }
       });
 
-      setTimeout(() => {
+      recording.playTimer = setTimeout(() => {
         sound.play((success) => {
+
+          clearInterval(recording.playProgressInterval);
+          
           if (success) {
-             console.log('successfully finished playing');
+            console.log('successfully finished playing');
+            recording.isPlaying = false;
+            recording.playProgress = 1;
+            this.setState({
+              dataSource: ds.cloneWithRows(recordings)
+            })
            } else {
              console.log('playback failed due to audio decoding errors');
            }
+
+           sound.release();
         });
-      }, 500)
-    }
+
+        recording.isPlaying = true;
+        recording.playProgress = 0;
+        this.setState({
+          dataSource: ds.cloneWithRows(recordings)
+        })
+      }, 100);
+
+      recording.playProgressInterval = setInterval( () => {
+      
+        sound.getCurrentTime((curSecs) => {
+          if (!recording.isPlaying) {
+            return;
+          }
+          recording.playProgress = curSecs / recordingDuration;
+          this.setState({
+            dataSource: ds.cloneWithRows(recordings)
+          })
+        });
+      }, 500);
+
+    }, 100);
+  }
 
   async _startRecording() {
         
@@ -271,7 +314,6 @@ export default class seeds extends Component {
         console.log('recording started for ' + filePath);
         this.setState({
           isRecording: true,
-          recordingStart: new Date()
         });
       } catch (error) {
         console.error(error);
@@ -304,19 +346,31 @@ export default class seeds extends Component {
 
   _finishRecording(didSucceed, filePath) {
     this.setState({ finished: didSucceed });
-    console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${filePath}`);
-    recordings.unshift(
-      { name: 'recording', 
-        duration: this.state.currentTime, 
-        recordingPath: filePath,
-        created: Date.now()
+    console.log(`Finished recording: ${filePath}`);
+    
+    // load file and get duration
+    var sound = new Sound(filePath, '', (error) => {
+      if (error) {
+        console.log('Failed to load the sound', error);
+        return;
+      }
+
+      // get info from sound file
+      console.log('duration in seconds: ' + sound.getDuration() 
+              + 'number of channels: ' + sound.getNumberOfChannels());
+              
+      // store info for listing
+      recordings.unshift( { name: 'recording', 
+                            duration: sound.getDuration(),
+                            recordingPath: filePath,
+                            created: moment()
       });
-    this.setState({
-      dataSource: ds.cloneWithRows(recordings),
-      isRecording: false,
+      this.setState({
+        dataSource: ds.cloneWithRows(recordings),
+        isRecording: false,
+      });
     });
   }
-
 }
 
 const styles = StyleSheet.create({

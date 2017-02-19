@@ -19,7 +19,7 @@ module.exports = StyleSheet.create({
         paddingTop: 5,
         paddingLeft: 5,
         paddingRight: 5,
-        paddingBottom: 5,
+        paddingBottom: 10,
         borderRadius: 10,
   },
 

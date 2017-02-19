@@ -34,10 +34,15 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 x test scaling with lots of items
 x record button is floating on top of everything
+x add created (2s ago), display in grid under duration
+x play should display play progress as a progress bar in grid item
+x don't show progress bar if not playing
 
-add created (2s ago), display in grid under duration
+remove the warning for indeterminate progress bar
+fix the delay problem with android
 
-play should display play progress as a progress bar in grid item
+error handling - if filepath doesn't exist don't RSOD, display toast
+try catch on 248 when loading the sound file
 
 long press item to select grid item
     hide record button 
@@ -50,8 +55,9 @@ edit action pressed - popup edit page
       created - datetime picker
       notes - text area
       background - choose photo|color
-      show audio details
+      show audio details (size, filepath)
       tags
+
 
 # FEATURE - filter bar
 search icon in the title bar
@@ -66,10 +72,17 @@ history is displayed for user to select
 
 # non-functional 
 
+refactor - https://github.com/futurice/pepperoni-app-kit/blob/master/docs/ARCHITECTURE.md
 add redux / refactor (record button, which screen)
 add unit tests via jest
 add flow check vscode
 add persistence (redux middleware)
+
+# play performance
+keep the last played recordings cached (don't release)
+new recordings also get loaded into cache
+cache size is 10 recordings or XMB?
+remember whats in the cache and pre-load when loading the app
 
 # FEATURE - audio meter
 record - display audio meter when recording in modal
@@ -78,17 +91,11 @@ record - display audio meter when recording in modal
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
 
-
 # UI niceties
 animation - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
 work on ios
 icon - add icon to menu drop down
-
-# FEATURE - playlists (like albums)
-left side - pull out tab (default is all)
-under that is list of playlists (songs)
-can group recordings into playlists
-add to - list of playlists or 'Create...'
+recording name ellipse if exceed 20 characters
 
 
 # future
@@ -105,10 +112,19 @@ record - long press (>1 s) will display cancel in non-modal
 cancel - drag finger up, highlight cancel, let go will cancel
 FEATURE - export
 FEATURE - sync to cloud / backup
+# FEATURE - playlists (like albums)
+    left side - pull out tab (default is all)
+    under that is list of playlists (songs)
+    can group recordings into playlists
+    add to - list of playlists or 'Create...'
 
 # research
-immutable vs redux
+immutable vs redux - can use together.  used in pepperoni framework together
 https://www.npmjs.com/package/react-native-keyboard-spacer
+native-base - more advanced components on top of react-native components
+exponent - another layer on top of react-native
+pepperoni - opinionated boilerplate for react-native 
+mixins - https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html
 
 
 # archive
@@ -131,3 +147,21 @@ x grid layout
    X padding for content
    -X ess padding between items
    X duration + audio details in small text
+
+
+
+# reactions to react and javascript stack
+
+built in timer causes lots of bugs if forget to cleanup before the component unmounts, use 
+timermxin to auto cleanup but ES6 React doesn't support mixin, need to download another library react-mixin
+
+library provides record support, but they took out play support because anothe library provides it
+that library hasn't been updated for over a year, but there is a separate branch that is constantly being updated
+will those changes go into master
+
+uuid support, there is a node-uuid but this has been deprecated for uuid.  how are you suppose to know this?  
+check the github pages, check the npm pages and compare last updated
+
+conclusion - got to piece together many different libraries, finding the latest, most stable, ones that will be 
+supported long term.  
+
