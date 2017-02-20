@@ -4,12 +4,12 @@ import {
   TouchableWithoutFeedback,
   View,
   Text,
-  ProgressBarAndroid
+  ProgressBarAndroid,
+  StyleSheet
 } from 'react-native';
 
-import styles from './styles';
 import moment from 'moment';
-import TimeFormatter from '../../lib/minutes-seconds';
+import TimeFormatter from '../lib/minutes-seconds';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
@@ -74,5 +74,45 @@ GridView.propTypes = {
   onPress: PropTypes.func.isRequired,
   onLongPress: PropTypes.func.isRequired
 };
+
+const styles = StyleSheet.create({
+
+  grid: {
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1
+    // backgroundColor: 'tan',
+  },
+
+  gridItem: {
+       backgroundColor: '#CCC',
+        marginLeft: 5,
+        marginTop: 5,
+        // width: 100,
+        height: 70,
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        borderRadius: 10,
+  },
+
+  gridName: {
+    fontSize: 12,
+    color: '#777'
+  },
+  
+  gridDuration: {
+    color: '#000',
+    fontSize: 12,
+    fontWeight: '300'
+  },
+
+  gridCreated: {
+    color: '#777',
+    fontSize: 12,
+  }
+});
 
 export default GridView;
