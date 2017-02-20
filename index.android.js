@@ -8,10 +8,12 @@ import uuid from 'uuid/v4';
 import moment from 'moment'
 
 import TimeFormatter from './app/lib/minutes-seconds';
+import Toast from './app/lib/toast'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from 'react-native-action-button';
-import PopupMenu from './app/components/PopupMenu';
 import GridView from './app/components/GridView';
+import TitleBar from './app/components/TitleBar';
+import { LISTLAYOUT } from './app/constants';
 
 import React, { Component } from 'react';
 import {
@@ -27,7 +29,7 @@ import {
   TouchableHighlight,
   View,
   Platform,
-  PermissionsAndroid,
+  PermissionsAndroid
 } from 'react-native';
 
 import {default as Sound} from 'react-native-sound';
@@ -36,11 +38,6 @@ import {AudioRecorder, AudioUtils} from 'react-native-audio';
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
 });
-
-const LISTLAYOUT = { 
-  GRID : "grid",
-  LIST : "list"
-};
 
 const recordModalWidth = 200;
 const recordModalHeight = 200;
@@ -56,40 +53,16 @@ export default class seeds extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       dataSource: ds.cloneWithRows(recordings),
       isRecording: false,
       currentTime: 0.0,
-      listLayout: LISTLAYOUT.GRID,
+      listLayout: LISTLAYOUT.GRID
     };
 
   }
 
   _getNewAudioPath() {
     return AudioUtils.DocumentDirectoryPath + '/' + uuid() + '.aac'
-  }
-
-  _onPopupMenuEvent = (eventName, index) => {
-
-    if (eventName == 'itemSelected') {
-      if (index == 0) {
-        this._toggleListLayout(LISTLAYOUT.LIST);
-      } else if (index == '1') {
-        // grid view
-        this._toggleListLayout(LISTLAYOUT.GRID);
-      }
-    }
-  
-  }
-
-
-  _renderTitleBar() {
-    return(
-      <View style={styles.titleBar}>
-        <Text style={styles.title}>Seeds</Text>
-        <PopupMenu actions={['List view', 'Grid view']} onPress={this._onPopupMenuEvent} />
-      </View>
-    );
   }
 
   _renderRecordPanel() {
@@ -138,19 +111,11 @@ export default class seeds extends Component {
 
   _renderGrid() {
     return(
-      <GridView dataSource={this.state.dataSource} onPress={this._playRecording.bind(this)}/>
-    )
-  }
-
-  _renderListControls() {
-
-    return(
-        <View style={styles.listControls}>
-           <MIcon.Button name="view-list" backgroundColor="#3b5998" 
-              onPress={this._toggleListLayout.bind(this, LISTLAYOUT.LIST)}>List</MIcon.Button>
-           <MIcon.Button name="view-grid" backgroundColor="#3b5998" 
-              onPress={this._toggleListLayout.bind(this, LISTLAYOUT.GRID)}>Grid</MIcon.Button>
-       </View>
+      <GridView 
+        dataSource={this.state.dataSource} 
+        onPress={this._playRecording.bind(this)}
+        onLongPress={this._displayActionBar.bind(this)}
+      />
     )
   }
 
@@ -158,8 +123,11 @@ export default class seeds extends Component {
 
     return (
       <View style={styles.container}>
-        {this._renderTitleBar()}
-        {/*{this._renderListControls()}*/}
+        <TitleBar 
+          title="Seeds"
+          onMenuEvent={this._onMenuEvent.bind(this)}
+          menuActions={['List view', 'Grid view']}  
+        />
         {this.state.listLayout == LISTLAYOUT.LIST && this._renderList()}
         {this.state.listLayout == LISTLAYOUT.GRID && this._renderGrid()}
         {!this.state.isRecording && this._renderButton({ displayText: "Record", 
@@ -173,16 +141,23 @@ export default class seeds extends Component {
     );
   }
 
-  _toggleListLayout(layoutType) {
+  _onMenuEvent = (eventName, index) => {
 
-    if (layoutType == this.state.listLayout) {
-      return;
+    if (eventName == 'itemSelected') {
+      if (index == 0) {
+        this.setState( {
+          "listLayout": LISTLAYOUT.LIST
+        })
+      } else if (index == '1') {
+        this.setState( {
+          "listLayout": LISTLAYOUT.GRID
+        })
+      }
     }
+  }
 
-    this.setState( {
-      "listLayout": layoutType
-    })
-
+  _displayActionBar(recording) {
+    Toast('display action bar');
   }
 
   _checkPermission() {
@@ -371,22 +346,6 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
-  },
-
-  titleBar: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
-    backgroundColor: '#1B5E20',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
-  title: {
-    alignSelf: 'center',
-    fontWeight: '600',
-    color: 'white'
   },
 
   recordPanel: {

@@ -32,18 +32,11 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-x remove the warning for indeterminate progress bar - https://github.com/facebook/react-native/pull/11791/commits/d336518bcbdb59128ec74f486953fce8750324ce
-x grid layout needs to be tighter, less spaces
-x grid item needs more padding inside
-x error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
-
-progress bar should not changed size of the grid item
-progress bar should align-self: flex-end
-
 long press item to select grid item
-    hide record button 
-    show edit | delete | share | add-to - as FAB
-    use native base?
+display edit | delete | share icons | back in tool bar
+display back button will cancel
+clicking outside of item will cancel 
+    
 
 # FEATURE - edit 
 edit action pressed - navigate to edit page
@@ -52,28 +45,21 @@ edit created - datetime picker
 edit notes - text area
 edit tags - support autocompletion based on history
 edit background color
-add icon (picker - how to choose)
 back button go back to list
 cancel and ok button
 
-# FEATURE - filter bar
-search icon in the title bar
-click search icon it expands to text field 
-typing in text field does realtime filtering on grid
-saves the text typed in as history 
-history is displayed for user to select
-
-# FEATURE - delete
-
-# FEATURE - share
-
-# non-functional 
+# PERSISTENCE
 
 refactor - https://github.com/futurice/pepperoni-app-kit/blob/master/docs/ARCHITECTURE.md
 add redux / refactor (record button, which screen)
-add unit tests via jest
-add flow check vscode
 add persistence (redux middleware)
+
+# FEATURE - delete
+
+# add unit testing
+add unit tests via jest
+
+------------- PHASE ONE DONE --------------
 
 # play performance
 keep the last played recordings cached (don't release)
@@ -82,41 +68,64 @@ cache size is 10 recordings or XMB?
 remember whats in the cache and pre-load when loading the app
 
 # FEATURE - grid display customization
-simple view - name, if name empty display icon, if icon empty then nothing
+simple view - name, if name empty display icon, if icon empty then nothing, fixed size sqaure grid items based on width of screen
 detailed view - default (name, duration, created)
+edit grid item - add vector icon or url image or browse local photo?
 
-# FEATURE - audio meter
+# FEATURE - share
+display app picker and then send the wave file to that app
+
+# data backup
+where is it on the phone, how does user back it up, where does it go
+user android's phone backup
+backup to user's cloud storage (dropbox, google drive, baidu yun)
+backup to own storage (REJECT)
+
+# UI fixes
+recording name ellipse if exceed 20 characters
+progress bar should not changed size of the grid item
+progress bar should align-self: flex-end
+
+----------- PHASE TWO DONE -----------------
+
+# FEATURE - playlists (like albums)
+    left side - pull out tab (default is all)
+    under that is list of playlists (songs)
+    can group recordings into playlists
+    long press grid item - add to - list of playlists or 'Create...'
+
+# UI enhancements
+animation - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
+icon - add icons to menu drop down
 record - display audio meter when recording in modal
     http://developer.samsung.com/technical-doc/view.do;jsessionid=CD49A14903D73079243BF98A5567F7F0?v=T000000086
     http://stackoverflow.com/questions/14181449/android-detect-sound-level
     https://www.newventuresoftware.com/blog/record-play-and-visualize-raw-audio-data-in-android
 
+# FEATURE - filter bar
+search icon in the title bar
+click search icon it expands to text field 
+typing in text field does realtime filtering on grid
+saves the text typed in as history 
+history is displayed for user to select
 
-# UI enhancements
-animation - newest audio should show animate in (http://stackoverflow.com/questions/31997126/animate-listview-items-when-they-are-added-removed-from-datasource)
-work on ios
-icon - add icon to menu drop down
-recording name ellipse if exceed 20 characters
+# FEATURE - import recordings
+from url
+from local file
+from dropbox, baidu yun, google drive
 
-# future
-record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
+# DEPLOY to android store
 minimize apk size
-location - add gps support where recorded
-location - in SF, in CA, in China, Earth
-add payment support to buy 
+publish to store
+put up description
+
+-------- PHASE 3 DONE --------------
+
+# out of scope
+record - adjust mic gain (http://stackoverflow.com/questions/25441166/how-to-adjust-microphone-sensitivity-while-recording-audio-in-android-solved)
 record - display recording details (bit rate, sample rate)
-export data to dropbox, google drive
-import data from dropbox, google drive
-import sample from url
 record - long press (>1 s) will display cancel in non-modal
 cancel - drag finger up, highlight cancel, let go will cancel
-FEATURE - export
-FEATURE - sync to cloud / backup
-# FEATURE - playlists (like albums)
-    left side - pull out tab (default is all)
-    under that is list of playlists (songs)
-    can group recordings into playlists
-    add to - list of playlists or 'Create...'
 
 # research
 immutable vs redux - can use together.  used in pepperoni framework together
@@ -128,7 +137,6 @@ mixins - https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harm
 
 
 # archive
-
 x genymotion+ui explorer
 x add toggle listview to gridview
 x add vector icons to project - toggle grid/list
@@ -153,6 +161,10 @@ x record button is floating on top of everything
 x add created (2s ago), display in grid under duration
 x play should display play progress as a progress bar in grid item
 x don't show progress bar if not playing
+x remove the warning for indeterminate progress bar - https://github.com/facebook/react-native/pull/11791/commits/d336518bcbdb59128ec74f486953fce8750324ce
+x grid layout needs to be tighter, less spaces
+x grid item needs more padding inside
+x error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
 
 
 # reactions to react and javascript stack

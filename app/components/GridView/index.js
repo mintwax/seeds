@@ -31,7 +31,8 @@ export default class GridView extends Component {
         // renderFooter={ () =>  { return (<Text>{this.props.dataSource.getRowCount()} rows</Text>)}} 
         renderRow={ (rowData) => (
           <TouchableWithoutFeedback
-              onPress={this.props.onPress.bind(this, rowData)}>
+              onPress={this.props.onPress.bind(this, rowData)}
+              onLongPress={this.props.onLongPress.bind(this, rowData)}>
             <View style={ styles.gridItem }>
               <Text style={styles.gridName}>{rowData.name}</Text>
               <Text style={styles.gridDuration}>{TimeFormatter(rowData.duration)}</Text>
