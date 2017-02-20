@@ -11,40 +11,68 @@ import styles from './styles';
 import moment from 'moment';
 import TimeFormatter from '../../lib/minutes-seconds';
 
-export default class GridView extends Component {
+const ds = new ListView.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2
+});
 
-  static propTypes = {
-    // array of actions, will be list items of Menu
-    dataSource: PropTypes.instanceOf(ListView.DataSource),
-    onPress: PropTypes.func.isRequired
-  }
+class GridView extends Component {
 
   constructor (props) {
     super(props);
+    this.state = {
+      dataSource: ds.cloneWithRows(props.recordings)
+    };
+    this._renderRow = this._renderRow.bind(this);
+  }
+
+  _updateDataSource(recordings) {
+    this.setState({
+      dataSource: ds.cloneWithRows(recordings)
+    });
+  }
+
+  componentWillReceiveProps(newProps) {
+    this._updateDataSource(newProps.recordings);
   }
   
-  render() { 
+  _renderRow(recording) {
+    const onPress = this.props.onPress.bind(this, recording);
+    const onLongPress = this.props.onLongPress.bind(this, recording);
+    return (
+      <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}>
+        <View style={styles.gridItem}>
+          <Text style={styles.gridName}>{recording.name}</Text>
+          <Text style={styles.gridDuration}>{TimeFormatter(recording.duration)}</Text>
+          {/*<Text style={styles.gridCreated}>{moment.duration(rowData.created - moment()).humanize()} ago</Text>*/}
+          {recording.isPlaying && 
+            <ProgressBarAndroid 
+              styleAttr="Horizontal" 
+              indeterminate={false} 
+              color="blue" 
+              progress={rowData.playProgress} 
+              {...this.props}
+            />
+          }
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  }
+
+  render() {
     return (
       <ListView contentContainerStyle={styles.grid}
         enableEmptySections={true}
-        dataSource={this.props.dataSource}
-        // renderFooter={ () =>  { return (<Text>{this.props.dataSource.getRowCount()} rows</Text>)}} 
-        renderRow={ (rowData) => (
-          <TouchableWithoutFeedback
-              onPress={this.props.onPress.bind(this, rowData)}
-              onLongPress={this.props.onLongPress.bind(this, rowData)}>
-            <View style={ styles.gridItem }>
-              <Text style={styles.gridName}>{rowData.name}</Text>
-              <Text style={styles.gridDuration}>{TimeFormatter(rowData.duration)}</Text>
-              {/*<Text style={styles.gridCreated}>{moment.duration(rowData.created - moment()).humanize()} ago</Text>*/}
-              {rowData.isPlaying && <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} color="blue" progress={rowData.playProgress} {...this.props}/>}
-            </View>
-          </TouchableWithoutFeedback>
-        )}
-    />
-  )
+        dataSource={this.state.dataSource}
+        renderRow={this._renderRow}
+      />
+    )
   }
 }
 
+GridView.propTypes = {
+  recordings: PropTypes.array.isRequired,
+  onPress: PropTypes.func.isRequired,
+  onLongPress: PropTypes.func.isRequired
+};
 
-          
+export default GridView;

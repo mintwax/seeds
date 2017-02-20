@@ -35,10 +35,6 @@ import {
 import {default as Sound} from 'react-native-sound';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 
-const ds = new ListView.DataSource({
-  rowHasChanged: (r1, r2) => r1 !== r2
-});
-
 const recordModalWidth = 200;
 const recordModalHeight = 200;
 const window = Dimensions.get('window');
@@ -46,14 +42,14 @@ const recordModalTop = (window.height - recordModalHeight) / 2;
 const recordModalLeft = (window.width - recordModalWidth) / 2;
 
 // let recordings = [];
-import recordings from './app/mock/recordings'
+import mockRecordings from './app/mock/recordings'
 
 export default class seeds extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: ds.cloneWithRows(recordings),
+      recordings: mockRecordings,
       isRecording: false,
       currentTime: 0.0,
       listLayout: LISTLAYOUT.GRID
@@ -111,10 +107,10 @@ export default class seeds extends Component {
 
   _renderGrid() {
     return(
-      <GridView 
-        dataSource={this.state.dataSource} 
-        onPress={this._playRecording.bind(this)}
-        onLongPress={this._displayActionBar.bind(this)}
+      <GridView
+        recordings={this.state.recordings}
+        onPress={this._onPressRecording.bind(this)}
+        onLongPress={this._onLongPressRecording.bind(this)}
       />
     )
   }
@@ -156,9 +152,6 @@ export default class seeds extends Component {
     }
   }
 
-  _displayActionBar(recording) {
-    Toast('display action bar');
-  }
 
   _checkPermission() {
     if (Platform.OS !== 'android') {
@@ -211,6 +204,20 @@ export default class seeds extends Component {
     // TODO - track all the playings and clear the timeouts and intervals
   }
 
+  _onLongPressRecording(recording) {
+    if (recording.isSelected) {
+      recording.isSelected = false;
+    } else {
+      recording.isSelected = true;
+    }
+    
+  }
+
+  _onPressRecording(recording) {
+    // in future press will either play or select depending on current state
+    this._playRecording(recording);
+  }
+
   _playRecording(recording) {
 
     var recordingPath = recording.recordingPath;
@@ -234,17 +241,11 @@ export default class seeds extends Component {
         }
 
         recording.isPlaying = false;
-        this.setState({
-          dataSource: ds.cloneWithRows(recordings)
-        })
         sound.release();
       });
 
       recording.isPlaying = true;
       recording.playProgress = 0;
-      this.setState({
-        dataSource: ds.cloneWithRows(recordings)
-      })
      
       recording.playProgressInterval = setInterval( () => {
       
@@ -253,9 +254,6 @@ export default class seeds extends Component {
             return;
           }
           recording.playProgress = curSecs / recordingDuration;
-          this.setState({
-            dataSource: ds.cloneWithRows(recordings)
-          })
         });
       }, 500);
     })
@@ -325,15 +323,19 @@ export default class seeds extends Component {
       console.log('duration in seconds: ' + sound.getDuration() 
               + 'number of channels: ' + sound.getNumberOfChannels());
               
-      // store info for listing
-      recordings.unshift( { name: '', 
-                            duration: sound.getDuration(),
-                            recordingPath: filePath,
-                            created: moment()
-      });
+      var newRecordings = [        
+        { 
+          name: '', 
+          duration: sound.getDuration(),
+          recordingPath: filePath,
+          created: moment()
+        },
+        ...this.state.recordings, 
+      ];
+
       this.setState({
-        dataSource: ds.cloneWithRows(recordings),
         isRecording: false,
+        recordings: newRecordings
       });
     });
   }

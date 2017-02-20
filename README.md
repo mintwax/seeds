@@ -32,7 +32,7 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-long press item to select grid item
+long press item to select grid item - display green
 display edit | delete | share icons | back in tool bar
 display back button will cancel
 clicking outside of item will cancel 
@@ -52,6 +52,8 @@ cancel and ok button
 
 refactor - https://github.com/futurice/pepperoni-app-kit/blob/master/docs/ARCHITECTURE.md
 add redux / refactor (record button, which screen)
+https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
+
 add persistence (redux middleware)
 
 # FEATURE - delete
@@ -82,6 +84,7 @@ backup to user's cloud storage (dropbox, google drive, baidu yun)
 backup to own storage (REJECT)
 
 # UI fixes
+anitmate add list and remove list - http://moduscreate.com/react-native-dynamic-animated-lists/
 recording name ellipse if exceed 20 characters
 progress bar should not changed size of the grid item
 progress bar should align-self: flex-end
