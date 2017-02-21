@@ -8,6 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
+import {List} from 'immutable';
 import moment from 'moment';
 import TimeFormatter from '../lib/minutes-seconds';
 
@@ -17,17 +18,23 @@ const ds = new ListView.DataSource({
 
 class GridView extends Component {
 
+  static propTypes = {
+    recordings: PropTypes.instanceOf(List).isRequired,
+    onPress: PropTypes.func.isRequired,
+    onLongPress: PropTypes.func.isRequired
+  };
+
   constructor (props) {
     super(props);
     this.state = {
-      dataSource: ds.cloneWithRows(props.recordings)
+       dataSource: ds.cloneWithRows(props.recordings.toArray())
     };
     this._renderRow = this._renderRow.bind(this);
   }
 
   _updateDataSource(recordings) {
     this.setState({
-      dataSource: ds.cloneWithRows(recordings)
+      dataSource: ds.cloneWithRows(recordings.toArray())
     });
   }
 
@@ -68,12 +75,6 @@ class GridView extends Component {
     )
   }
 }
-
-GridView.propTypes = {
-  recordings: PropTypes.array.isRequired,
-  onPress: PropTypes.func.isRequired,
-  onLongPress: PropTypes.func.isRequired
-};
 
 const styles = StyleSheet.create({
 

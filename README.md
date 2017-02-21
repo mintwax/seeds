@@ -31,15 +31,25 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 ```
 
 # todo
+add redux - https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
+            https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
+            http://redux.js.org/docs/basics/ExampleTodoList.html
+   refactor add using redux
+   refactor startrecrdoing
+   refactor listLayout change using redux
+   refactor playrecording
+   refactor selecting recording based on long press
+   
 
-long press item to select grid item - display green
-display edit | delete | share icons | back in tool bar
-display back button will cancel
-clicking outside of item will cancel 
+
+long press item to select grid item
+   display green checkmark on all selected item
+   ... and navigate to selectPanel - display edit | delete | share icons | back in tool bar
+   clicking anywhere except on another item or toolbar icon will cancel
+   clicking on another item will also select that item - maintain list of selectedItems
     
-
 # FEATURE - edit 
-edit action pressed - navigate to edit page
+edit action pressed - cancel the selectPanel and navigate to edit page
 edit name - textfield
 edit created - datetime picker
 edit notes - text area
@@ -49,14 +59,15 @@ back button go back to list
 cancel and ok button
 
 # PERSISTENCE
-
-refactor - https://github.com/futurice/pepperoni-app-kit/blob/master/docs/ARCHITECTURE.md
-add redux / refactor (record button, which screen)
-https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
-
-add persistence (redux middleware)
+add persistence (redux middleware) - async - 
+   recordings (no ui state - selected, isplaying, playprogress)
+      refactor ui state into separate object under recordings
+      fileter out the ui state when saving
+   save preferences
+      refactor all the saved ui preferences to preferences object
 
 # FEATURE - delete
+confirm delete of selected items
 
 # add unit testing
 add unit tests via jest
@@ -74,14 +85,10 @@ simple view - name, if name empty display icon, if icon empty then nothing, fixe
 detailed view - default (name, duration, created)
 edit grid item - add vector icon or url image or browse local photo?
 
-# FEATURE - share
-display app picker and then send the wave file to that app
-
-# data backup
-where is it on the phone, how does user back it up, where does it go
-user android's phone backup
-backup to user's cloud storage (dropbox, google drive, baidu yun)
-backup to own storage (REJECT)
+# FEATURE - import recordings
+from url
+from local file
+from dropbox, baidu yun, google drive
 
 # UI fixes
 anitmate add list and remove list - http://moduscreate.com/react-native-dynamic-animated-lists/
@@ -90,6 +97,15 @@ progress bar should not changed size of the grid item
 progress bar should align-self: flex-end
 
 ----------- PHASE TWO DONE -----------------
+
+# FEATURE - share
+display app picker and then send the wave file to that app
+
+# data backup
+where is it on the phone, how does user back it up, where does it go
+user android's phone backup
+backup to user's cloud storage (dropbox, google drive, baidu yun)
+backup to own storage (REJECT)
 
 # FEATURE - playlists (like albums)
     left side - pull out tab (default is all)
@@ -112,11 +128,6 @@ typing in text field does realtime filtering on grid
 saves the text typed in as history 
 history is displayed for user to select
 
-# FEATURE - import recordings
-from url
-from local file
-from dropbox, baidu yun, google drive
-
 # DEPLOY to android store
 minimize apk size
 publish to store
@@ -137,7 +148,9 @@ native-base - more advanced components on top of react-native components
 exponent - another layer on top of react-native
 pepperoni - opinionated boilerplate for react-native 
 mixins - https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html
-
+why redux-loop, redux-thunk, redux-saga 
+... http://stackoverflow.com/questions/34570758/why-do-we-need-middleware-for-async-flow-in-redux/34623840#34623840
+... http://redux.js.org/docs/advanced/AsyncFlow.html
 
 # archive
 x genymotion+ui explorer
@@ -168,6 +181,7 @@ x remove the warning for indeterminate progress bar - https://github.com/faceboo
 x grid layout needs to be tighter, less spaces
 x grid item needs more padding inside
 x error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
+x refactor - https://github.com/futurice/pepperoni-app-kit/blob/master/docs/ARCHITECTURE.md
 
 
 # reactions to react and javascript stack

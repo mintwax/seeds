@@ -1,7 +1,7 @@
-
+import {List} from 'immutable';
 import moment from 'moment'
 
-module.exports = [ { 
+module.exports = List([ { 
     name: "recording-6 long name with spaces that overflows out of boundary", 
     duration: 2, 
     created: moment().add(1, 'days'),
@@ -62,4 +62,5 @@ module.exports = [ {
     created: moment().add(2, 'years').add(8, 'hours').add(9, 'seconds'),
     recordingPath: '/dummy/path/sound.acc' 
   }
-]
+]);
+
