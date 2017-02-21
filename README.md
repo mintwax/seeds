@@ -34,9 +34,9 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 add redux - https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
             https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
             http://redux.js.org/docs/basics/ExampleTodoList.html
-   xrefactor add using redux
-   xrefactor startrecrdoing
-   xrefactor playrecording
+   x refactor add using redux
+   x refactor startrecrdoing
+   refactor playrecording
    refactor progress bar
    refactor list | grid view
    refactor selecting recording based on long press

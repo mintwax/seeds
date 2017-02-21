@@ -1,5 +1,3 @@
-import uuid from 'uuid/v4';
-
 import TimeFormatter from '../lib/minutes-seconds';
 import Toast from '../lib/toast'
 import GridView from '../components/GridView';
@@ -24,10 +22,10 @@ import {
 } from 'react-native';
 
 import {default as Sound} from 'react-native-sound';
-import {AudioRecorder, AudioUtils} from 'react-native-audio';
+import {AudioRecorder } from 'react-native-audio';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from 'react-native-action-button';
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 
 const recordModalWidth = 200;
 const recordModalHeight = 200;
@@ -40,23 +38,20 @@ class AppView extends Component {
   static propTypes = {
     recordings: PropTypes.instanceOf(List).isRequired,
     addRecording: PropTypes.func.isRequired,
+    mic: PropTypes.instanceOf(Map).isRequired,
+    layout: PropTypes.string.isRequired,
+
+    requestStartRecording: PropTypes.func.isRequired,
+    requestStopRecording: PropTypes.func.isRequired,
+    updateElapsedRecordingTime: PropTypes.func.isRequired,
     setLayout: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      isRecording: false,
-      currentTime: 0.0,
-    };
-
     this._onMenuEvent = this._onMenuEvent.bind(this);
     this._onPressFAB = this._onPressFAB.bind(this);
     this._onPressRecording = this._onPressRecording.bind(this);
-  }
-
-  _getNewAudioPath() {
-    return AudioUtils.DocumentDirectoryPath + '/' + uuid() + '.aac'
   }
 
   _renderRecordPanel() {
@@ -65,7 +60,7 @@ class AppView extends Component {
            <Icon name="microphone" size={90} color="white" >
           </Icon>
           <Text style={styles.recordTimer}>
-            {TimeFormatter(this.state.currentTime)}
+            {TimeFormatter(this.props.mic.get('elapsedRecordingSecs'))}
           </Text>
       </View>
     )
@@ -88,11 +83,11 @@ class AppView extends Component {
        <ActionButton
           position="center"
           buttonColor="rgb(49,81,181)"
-          icon={<Icon name={this.state.isRecording ? "stop" : "microphone"} style={styles.actionButtonIcon}/>} 
+          icon={<Icon name={this.props.mic.get('isRecording') ? "stop" : "microphone"} style={styles.actionButtonIcon}/>} 
           onPress={this._onPressFAB}
        />
 
-        {this.state.isRecording && this._renderRecordPanel()}
+        {this.props.mic.get('isRecording') && this._renderRecordPanel()}
 
       </View>
     );
@@ -127,16 +122,6 @@ class AppView extends Component {
       });
   }
 
-  prepareRecordingPath(){
-    let filePath = this._getNewAudioPath();
-    AudioRecorder.prepareRecordingAtPath(filePath, {
-      SampleRate: 22050,
-      Channels: 1,
-      AudioQuality: "Low",
-      AudioEncoding: "aac",
-      // AudioEncodingBitRate: 32000
-    });
-  }
 
   componentDidMount() {
     this._checkPermission().then((hasPermission) => {
@@ -145,13 +130,17 @@ class AppView extends Component {
       if (!hasPermission) return;
 
       AudioRecorder.onProgress = (data) => {
-        this.setState({currentTime: Math.floor(data.currentTime)});
+        this.props.updateElapsedRecordingTime( Math.floor(data.currentTime));
       };
 
       AudioRecorder.onFinished = (data) => {
         // Android callback comes in the form of a promise instead.
           if (Platform.OS === 'ios') {
-            this._finishRecording(data.status === "OK", data.audioFileURL);
+            if (data.satus === "OK") {
+              this.props.addRecording(data.currentTime, data.audioFileURL);
+            } else {
+              console.error("Recording failed " + data.audioFileURL);
+            }
           }
       };
     });
@@ -172,16 +161,15 @@ class AppView extends Component {
   }
 
   _onPressFAB() {
-    if (this.state.isRecording) {
-      this._stopRecording();
+    if (this.props.mic.get('isRecording')) {
+      this._pressStopRecording();
     } else {
-      this._startRecording()
+      this._pressStartRecording();
     }
   }
 
   _playRecording(recording) {
 
-    console.log("JOOBER-PLAY " + JSON.stringify(recording));
     var path = recording.path;
     var recordingDuration = recording.duration;
     clearInterval(recording.playProgressInterval);
@@ -221,76 +209,26 @@ class AppView extends Component {
     })
   }
 
-  async _startRecording() {
+  async _pressStartRecording() {
         
       if (!this.state.hasPermission) {
         console.warn('Can\'t record, no permission granted!');
         return;
       }
 
-      if (this.state.isRecording){
+      if (this.props.mic.get('isRecording')){
         console.warn('Already recording.');
         return;
       }
-
-      this.prepareRecordingPath();
-
-      try {
-        const filePath = await AudioRecorder.startRecording();
-        console.log('recording started for ' + filePath);
-        this.setState({
-          currentTime: 0.0,
-          isRecording: true,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-  
+      this.props.requestStartRecording();  
   }
 
-  async _stopRecording() {
-    if (! this.state.isRecording) {
+  async _pressStopRecording() {
+    if (! this.props.mic.get('isRecording')) {
       console.warn('Can\'t stop, not recording');
       return;
     }
-
-    try {
-      const filePath = await AudioRecorder.stopRecording();
-      console.log('recording stopped for ' + filePath);
-      
-      if (Platform.OS === 'android') {
-        this._finishRecording(true, filePath);
-      }
-      // clearInterval(this.interval);
-      return filePath;
-    } catch (error) {
-      console.error(error);
-      this.setState({
-          isRecording: false,
-      });
-    }
-  }
-
-  _finishRecording(didSucceed, filePath) {
-    this.setState({ finished: didSucceed });
-    console.log(`Finished recording: ${filePath}`);
-    
-    // load file and get duration
-    var sound = new Sound(filePath, '', (error) => {
-      if (error) {
-        console.log('Failed to load the sound', error);
-        return;
-      }
-
-      // get info from sound file
-      console.log('duration in seconds: ' + sound.getDuration() 
-              + 'number of channels: ' + sound.getNumberOfChannels());
-      this.props.addRecording(sound.getDuration(), filePath);
-      
-      this.setState({
-        isRecording: false,
-      });
-    });
+    this.props.requestStopRecording();
   }
 }
 

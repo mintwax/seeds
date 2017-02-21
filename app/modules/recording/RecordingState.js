@@ -4,6 +4,8 @@ import moment from 'moment'
 // Actions
 const ADD_RECORDING = 'RecordingState/ADD';
 const TOGGLE_SELECT_RECORDING = 'RecordingState/TOGGLE_SELECT';
+const START_RECORDING = 'RecordingState/START'
+const STOP_RECORDING = 'RecordingState/STOP'
 
 // Action creator
 export function addRecording(duration, path) {
@@ -11,6 +13,18 @@ export function addRecording(duration, path) {
     type: ADD_RECORDING,
     duration: duration,
     path: path
+  };
+}
+
+function startRecording() {
+  return { 
+    type: START_RECORDING,
+  };
+}
+
+function stopRecording() {
+  return { 
+    type: STOP_RECORDING,
   };
 }
 
