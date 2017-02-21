@@ -1,5 +1,4 @@
 import uuid from 'uuid/v4';
-import moment from 'moment'
 
 import TimeFormatter from '../lib/minutes-seconds';
 import Toast from '../lib/toast'
@@ -50,6 +49,10 @@ class AppView extends Component {
       isRecording: false,
       currentTime: 0.0,
     };
+
+    this._onMenuEvent = this._onMenuEvent.bind(this);
+    this._onPressFAB = this._onPressFAB.bind(this);
+    this._onPressRecording = this._onPressRecording.bind(this);
   }
 
   _getNewAudioPath() {
@@ -74,18 +77,18 @@ class AppView extends Component {
       <View style={styles.container}>
         <TitleBar 
           title="Seeds"
-          onMenuEvent={this._onMenuEvent.bind(this)}
+          onMenuEvent={this._onMenuEvent}
           menuActions={['List view', 'Grid view']}  
         />
         <GridView
           recordings={this.props.recordings}
-          onPress={this._onPressRecording.bind(this)}
-          onLongPress={this._onLongPressRecording.bind(this)}
+          onPress={this._onPressRecording}
+          onLongPress={this._onLongPressRecording}
         />
        <ActionButton
           position="center"
           buttonColor="rgb(49,81,181)"
-          iconName={this.state.isRecording ? "stop" : "microphone"}
+          icon={<Icon name={this.state.isRecording ? "stop" : "microphone"} style={styles.actionButtonIcon}/>} 
           onPress={this._onPressFAB}
        />
 
@@ -159,7 +162,7 @@ class AppView extends Component {
   }
 
   _onLongPressRecording(recording) {
-    Toast(recording.recordingPath + " selected ");
+    Toast(recording.path + " selected ");
     // TODO - hook into redux dispatch
   }
 
@@ -178,13 +181,14 @@ class AppView extends Component {
 
   _playRecording(recording) {
 
-    var recordingPath = recording.recordingPath;
+    console.log("JOOBER-PLAY " + JSON.stringify(recording));
+    var path = recording.path;
     var recordingDuration = recording.duration;
     clearInterval(recording.playProgressInterval);
 
-    var sound = new Sound(recordingPath, '', (error) => {
+    var sound = new Sound(path, '', (error) => {
       if (error) {
-        Alert.alert('Unable to play', 'Failed to load the recording: ' + recordingPath);
+        Alert.alert('Unable to play', 'Failed to load the recording: ' + path);
         return;
       }
       
@@ -235,6 +239,7 @@ class AppView extends Component {
         const filePath = await AudioRecorder.startRecording();
         console.log('recording started for ' + filePath);
         this.setState({
+          currentTime: 0.0,
           isRecording: true,
         });
       } catch (error) {

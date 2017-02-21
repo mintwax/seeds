@@ -39,6 +39,7 @@ class GridView extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    // TODO - why is this being called every second when recording a new audio
     this._updateDataSource(newProps.recordings);
   }
   

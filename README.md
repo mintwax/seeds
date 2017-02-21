@@ -34,13 +34,13 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 add redux - https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
             https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
             http://redux.js.org/docs/basics/ExampleTodoList.html
-   refactor add using redux
-   refactor startrecrdoing
-   refactor listLayout change using redux
-   refactor playrecording
+   xrefactor add using redux
+   xrefactor startrecrdoing
+   xrefactor playrecording
+   refactor progress bar
+   refactor list | grid view
    refactor selecting recording based on long press
    
-
 
 long press item to select grid item
    display green checkmark on all selected item
@@ -79,6 +79,8 @@ keep the last played recordings cached (don't release)
 new recordings also get loaded into cache
 cache size is 10 recordings or XMB?
 remember whats in the cache and pre-load when loading the app
+why is GridView.willrecievepropupdate getting called everytime the getState on parent is called?
+
 
 # FEATURE - grid display customization
 simple view - name, if name empty display icon, if icon empty then nothing, fixed size sqaure grid items based on width of screen

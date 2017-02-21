@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import AppView from './AppView';
 import * as RecordingStateActions from '../modules/recording/RecordingState';
+import * as LayoutStateActions from '../modules/recording/LayoutState';
 
 const mapStateToProps = (state) => {
   return ({
@@ -15,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     setLayout: (layoutType) => {
-      dispatch(RecordingStateActions.setLayout(layoutType));
+      dispatch(LayoutStateActions.setLayout(layoutType));
     }
   }
 
