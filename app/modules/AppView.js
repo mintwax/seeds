@@ -130,7 +130,7 @@ class AppView extends Component {
       if (!hasPermission) return;
 
       AudioRecorder.onProgress = (data) => {
-        this.props.updateElapsedRecordingTime( Math.floor(data.currentTime));
+        // this.props.updateElapsedRecordingTime( Math.floor(data.currentTime));
       };
 
       AudioRecorder.onFinished = (data) => {

@@ -52,15 +52,6 @@ class GridView extends Component {
           <Text style={styles.gridName}>{recording.get('name')}</Text>
           <Text style={styles.gridDuration}>{TimeFormatter(recording.get('duration'))}</Text>
           {/*<Text style={styles.gridCreated}>{moment.duration(moment(recording.get('created')) - moment()).humanize()} ago</Text>*/}
-          {recording.get('isPlaying') && 
-            <ProgressBarAndroid 
-              styleAttr="Horizontal" 
-              indeterminate={false} 
-              color="blue" 
-              progress={recording.get('elapsedPlaySecs') / recording.get('duration')} 
-              {...this.props}
-            />
-          }
         </View>
       </TouchableWithoutFeedback>
     )
