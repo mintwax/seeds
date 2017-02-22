@@ -3,8 +3,6 @@ import moment from 'moment'
 import {Map} from 'immutable'
 import {default as Sound} from 'react-native-sound';
 
-const playTimers = {};
-
 import {
   Alert,
 } from 'react-native';
@@ -57,9 +55,6 @@ export function toggleRecording(recording) {
 export function requestPlayRecording(recording) {
   
     var path = recording.get('path');
-    var recordingDuration = recording.get('duration');
-
-    //clearInterval(playTimers[path]);
 
     return function(dispatch) {
       var sound = new Sound(path, '', (error) => {
@@ -69,11 +64,9 @@ export function requestPlayRecording(recording) {
         }
         
         sound.play((success) => {
-
-          //clearInterval(playTimers[path]);
           
           if (success) {
-            //dispatch(updateElapsedPlayTime(recording, recordingDuration));
+      
           } else {
             Alert.alert('Unable to play', 'playback failed due to audio decoding errors');
           }
@@ -84,15 +77,6 @@ export function requestPlayRecording(recording) {
 
         dispatch(startPlayRecording(recording));
       
-        // playTimers[path] = setInterval( () => {
-        
-        //   sound.getCurrentTime((curSecs) => {
-        //     if (!recording.get('isPlaying')) {
-        //       return;
-        //     }
-        //     dispatch(updateElapsedPlayTime(recording, curSecs));
-        //   });
-        // }, 500);
       })
     }
   }
