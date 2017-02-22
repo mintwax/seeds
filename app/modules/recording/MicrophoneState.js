@@ -44,7 +44,6 @@ export function requestStartRecording() {
 
   return async function(dispatch) {
     prepareRecordingPath();
-    
     console.log('recording preparation finished ');    
 
     try {

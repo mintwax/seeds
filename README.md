@@ -31,17 +31,10 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 ```
 
 # todo
-add redux - https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
-            https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
-            http://redux.js.org/docs/basics/ExampleTodoList.html
-   x refactor add using redux
-   x refactor startrecrdoing
-   refactor playrecording
-   refactor progress bar
-   refactor list | grid view
-   refactor selecting recording based on long press
-   
 
+refactor playRecording / progressBar - isPlaying, playCurSecs
+refactor selecting recording based on long press
+   
 long press item to select grid item
    display green checkmark on all selected item
    ... and navigate to selectPanel - display edit | delete | share icons | back in tool bar
@@ -62,9 +55,7 @@ cancel and ok button
 add persistence (redux middleware) - async - 
    recordings (no ui state - selected, isplaying, playprogress)
       refactor ui state into separate object under recordings
-      fileter out the ui state when saving
-   save preferences
-      refactor all the saved ui preferences to preferences object
+      filter out the mic state when saving
 
 # FEATURE - delete
 confirm delete of selected items
@@ -74,13 +65,14 @@ add unit tests via jest
 
 ------------- PHASE ONE DONE --------------
 
-# play performance
-keep the last played recordings cached (don't release)
+# FEATURE - cache
+keep the last played recordings cached, and history
 new recordings also get loaded into cache
-cache size is 10 recordings or XMB?
-remember whats in the cache and pre-load when loading the app
-why is GridView.willrecievepropupdate getting called everytime the getState on parent is called?
+cache size is 50 recordings
+if exceed max then release sound and drop from history, then add new sound
+persist history and preload to cache on restore
 
+why is GridView.willrecievepropupdate getting called everytime the getState on parent is called?
 
 # FEATURE - grid display customization
 simple view - name, if name empty display icon, if icon empty then nothing, fixed size sqaure grid items based on width of screen
@@ -184,6 +176,11 @@ x grid layout needs to be tighter, less spaces
 x grid item needs more padding inside
 x error handling - if filepath doesn't exist don't RSOD, display toast - try catch on 248 when loading the sound file
 x refactor - https://github.com/futurice/pepperoni-app-kit/blob/master/docs/ARCHITECTURE.md
+x add redux - https://github.com/uiheros/react-native-redux-todo-list/blob/master/app/reducers/todos.js
+            https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
+            http://redux.js.org/docs/basics/ExampleTodoList.html
+x refactor add using redux
+x refactor startrecoring
 
 
 # reactions to react and javascript stack

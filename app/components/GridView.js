@@ -49,15 +49,15 @@ class GridView extends Component {
     return (
       <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}>
         <View style={styles.gridItem}>
-          <Text style={styles.gridName}>{recording.name}</Text>
-          <Text style={styles.gridDuration}>{TimeFormatter(recording.duration)}</Text>
-          {/*<Text style={styles.gridCreated}>{moment.duration(rowData.created - moment()).humanize()} ago</Text>*/}
-          {recording.isPlaying && 
+          <Text style={styles.gridName}>{recording.get('name')}</Text>
+          <Text style={styles.gridDuration}>{TimeFormatter(recording.get('duration'))}</Text>
+          {/*<Text style={styles.gridCreated}>{moment.duration(moment(recording.get('created')) - moment()).humanize()} ago</Text>*/}
+          {recording.get('isPlaying') && 
             <ProgressBarAndroid 
               styleAttr="Horizontal" 
               indeterminate={false} 
               color="blue" 
-              progress={rowData.playProgress} 
+              progress={recording.get('elapsedPlaySecs') / recording.get('duration')} 
               {...this.props}
             />
           }

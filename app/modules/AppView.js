@@ -151,13 +151,13 @@ class AppView extends Component {
   }
 
   _onLongPressRecording(recording) {
-    Toast(recording.path + " selected ");
+    Toast(recording.get('path') + " selected ");
     // TODO - hook into redux dispatch
   }
 
   _onPressRecording(recording) {
     // in future press will either play or select depending on current state
-    this._playRecording(recording);
+    this.props.requestPlayRecording(recording);
   }
 
   _onPressFAB() {
@@ -166,47 +166,6 @@ class AppView extends Component {
     } else {
       this._pressStartRecording();
     }
-  }
-
-  _playRecording(recording) {
-
-    var path = recording.path;
-    var recordingDuration = recording.duration;
-    clearInterval(recording.playProgressInterval);
-
-    var sound = new Sound(path, '', (error) => {
-      if (error) {
-        Alert.alert('Unable to play', 'Failed to load the recording: ' + path);
-        return;
-      }
-      
-      sound.play((success) => {
-
-        clearInterval(recording.playProgressInterval);
-        
-        if (success) {
-          recording.playProgress = 1;
-        } else {
-          Alert.alert('Unable to play', 'playback failed due to audio decoding errors');
-        }
-
-        recording.isPlaying = false;
-        sound.release();
-      });
-
-      recording.isPlaying = true;
-      recording.playProgress = 0;
-     
-      recording.playProgressInterval = setInterval( () => {
-      
-        sound.getCurrentTime((curSecs) => {
-          if (!recording.isPlaying) {
-            return;
-          }
-          recording.playProgress = curSecs / recordingDuration;
-        });
-      }, 500);
-    })
   }
 
   async _pressStartRecording() {
