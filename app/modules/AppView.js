@@ -18,7 +18,8 @@ import {
   TouchableHighlight,
   View,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
+  PanResponder
 } from 'react-native';
 
 import {default as Sound} from 'react-native-sound';
@@ -45,6 +46,7 @@ class AppView extends Component {
     requestStopRecording: PropTypes.func.isRequired,
     updateElapsedRecordingTime: PropTypes.func.isRequired,
     toggleRecording: PropTypes.func.isRequired,
+    clearAllSelected: PropTypes.func.isRequired,
     setLayout: PropTypes.func.isRequired
   }
 
@@ -54,6 +56,15 @@ class AppView extends Component {
     this._onPressFAB = this._onPressFAB.bind(this);
     this._onPressRecording = this._onPressRecording.bind(this);
     this._onLongPressRecording = this._onLongPressRecording.bind(this);
+
+    this._onPressCancel = this._onPressCancel.bind(this);
+    this._onPressDelete = this._onPressDelete.bind(this);
+    this._onPressEdit= this._onPressEdit.bind(this);
+    this._onPressShare = this._onPressShare.bind(this);
+
+    this.state = {
+      selectedRecordings: List([])
+    }
   }
 
   _renderRecordPanel() {
@@ -72,15 +83,20 @@ class AppView extends Component {
     return (
       <View style={styles.container}>
         <TitleBar 
-          title="Seeds"
+          title={"Seeds"}
+          selectedRecordings={this.state.selectedRecordings}
+          onPressEdit={this._onPressEdit}
+          onPressDelete={this._onPressDelete}
+          onPressShare={this._onPressShare}
+          onPressCancel={this._onPressCancel}
           onMenuEvent={this._onMenuEvent}
           menuActions={['List view', 'Grid view']}  
         />
         <GridView
-          recordings={this.props.recordings}
-          onPress={this._onPressRecording}
-          onLongPress={this._onLongPressRecording}
-        />
+            recordings={this.props.recordings}
+            onPress={this._onPressRecording}
+            onLongPress={this._onLongPressRecording}
+      />
        <ActionButton
           position="center"
           buttonColor="rgb(49,81,181)"
@@ -92,6 +108,22 @@ class AppView extends Component {
 
       </View>
     );
+  }
+
+  _onPressEdit() {
+    Toast("edit");
+  }
+
+  _onPressDelete() {
+    Toast("delete");
+  }
+
+  _onPressShare() {
+    Toast("share");
+  }
+
+  _onPressCancel() {
+    this.props.clearAllSelected();
   }
 
   _onMenuEvent = (eventName, index) => {
@@ -123,6 +155,47 @@ class AppView extends Component {
       });
   }
 
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      // Ask to be the responder:
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
+
+      onPanResponderGrant: (evt, gestureState) => {
+        console.log("granted " + gestureState);
+        // The guesture has started. Show visual feedback so the user knows
+        // what is happening!
+
+        // gestureState.d{x,y} will be set to zero now
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        console.log("move " + gestureState);
+        // The most recent move distance is gestureState.move{X,Y}
+
+        // The accumulated gesture distance since becoming responder is
+        // gestureState.d{x,y}
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderRelease: (evt, gestureState) => {
+        console.log("released " + gestureState);
+        // The user has released all touches while this view is the
+        // responder. This typically means a gesture has succeeded
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        console.log("cancelled " + gestureState);
+        // Another component has become the responder, so this gesture
+        // should be cancelled
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        console.log("blocked " + gestureState);
+        // Returns whether this component should block native components from becoming the JS
+        // responder. Returns true by default. Is currently only supported on android.
+        return true;
+      },
+    });
+  }
 
   componentDidMount() {
     this._checkPermission().then((hasPermission) => {
@@ -151,13 +224,27 @@ class AppView extends Component {
     // TODO - track all the playings and clear the timeouts and intervals
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    var selectedRecordings = nextProps.recordings.filter((recording) => {
+      return recording.get('isSelected');
+    })
+
+    this.setState({
+      selectedRecordings: selectedRecordings
+    });
+  }
+
   _onLongPressRecording(recording) {
     this.props.toggleRecording(recording);
   }
 
   _onPressRecording(recording) {
-    // in future press will either play or select depending on current state
-    this.props.requestPlayRecording(recording);
+    if (this.state.selectedRecordings.size > 0) {
+      this.props.toggleRecording(recording);
+    } else {
+      this.props.requestPlayRecording(recording);
+    }
   }
 
   _onPressFAB() {

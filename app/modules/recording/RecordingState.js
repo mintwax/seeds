@@ -10,6 +10,7 @@ import {
 // Actions
 const ADD_RECORDING = 'RecordingState/ADD';
 const TOGGLE_SELECT_RECORDING = 'RecordingState/TOGGLE_SELECT';
+const CLEAR_ALL_SELECTED = 'RecordingState/CLEAR_ALL';
 const START_PLAY_RECORDING = 'RecordingState/PLAY'
 const STOP_PLAY_RECORDING = 'RecordingState/STOP'
 const UPDATE_ELAPSED_PLAY_TIME = 'RecordingState/UPDATE_ELAPSED_PLAY_TIME'
@@ -45,6 +46,11 @@ function updateElapsedPlayTime(recording, elapsedPlaySecs) {
   }
 }
 
+export function clearAllSelected() {
+  return {
+    type: CLEAR_ALL_SELECTED
+  };
+}
 export function toggleRecording(recording) {
   return {
     type: TOGGLE_SELECT_RECORDING,
@@ -63,20 +69,17 @@ export function requestPlayRecording(recording) {
           return;
         }
         
+        dispatch(startPlayRecording(recording));
+
         sound.play((success) => {
           
-          if (success) {
-      
-          } else {
+          if (!success) {
             Alert.alert('Unable to play', 'playback failed due to audio decoding errors');
           }
 
           dispatch(stopPlayRecording(recording));
           sound.release();
         });
-
-        dispatch(startPlayRecording(recording));
-      
       })
     }
   }
@@ -94,10 +97,15 @@ const recordings = (state = defaultRecordings, action) => {
             created: moment().valueOf()
       }));
 
+    case CLEAR_ALL_SELECTED:
+      return state.map((r) => {
+        return r.set('isSelected', false);
+      });
+
     case TOGGLE_SELECT_RECORDING:
       return state.map((r) => {
         if (r.get('path') === action.path) {
-          return r.set('isSelected', !r.isSelected);
+          return r.set('isSelected', !r.get('isSelected'));
         }
         return r;
       });

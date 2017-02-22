@@ -32,28 +32,16 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-x refactor playRecording / progressBar - isPlaying, playCurSecs
-x refactor selecting recording based on long press   
-x long press item to select grid item
-x display green checkmark on all selected item
-
-why the stoprecording is not being dispatched properly
-
-add navigation to selectPanel
-
-display navigate to selectPanel - display edit | delete | share icons | back in tool bar
-
-onPress anywhere including selected item will cancel selection except for clicking on toolbar
-
+x display edit | delete | share icons | back in tool bar
     
 # FEATURE - edit 
 edit action pressed - cancel the selectPanel and navigate to edit page
 edit name - textfield
-edit created - datetime picker
+display created 
+display duration
 edit notes - text area
-edit tags - support autocompletion based on history
-edit background color
 back button go back to list
+play button to listen to recording on edit page
 cancel and ok button
 
 # PERSISTENCE
@@ -88,6 +76,8 @@ edit grid item - add vector icon or url image or browse local photo?
 from url
 from local file
 from dropbox, baidu yun, google drive
+
+# FEATURE - cancel playing
 
 # UI fixes
 anitmate add list and remove list - http://moduscreate.com/react-native-dynamic-animated-lists/
@@ -187,7 +177,13 @@ x add redux - https://github.com/uiheros/react-native-redux-todo-list/blob/maste
             http://redux.js.org/docs/basics/ExampleTodoList.html
 x refactor add using redux
 x refactor startrecoring
-
+x refactor playRecording / progressBar - isPlaying, playCurSecs
+x refactor selecting recording based on long press   
+x long press item to select grid item
+x display green checkmark on all selected item
+x why the stoprecording is not being dispatched properly - only affects emulator
+x onPress on item will de-select
+x multiple select
 
 # reactions to react and javascript stack
 

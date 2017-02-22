@@ -58,12 +58,13 @@ class GridView extends Component {
         enabledSelectedStyle.shadowOffset = 1;
         enabledSelectedStyle.shadowOpacity = 1;
       } else if (Platform.OS === 'android') {
-        enabledSelectedStyle.elevation = 1;
+        enabledSelectedStyle.elevation = 3;
+        enabledSelectedStyle.borderColor = '#9ecaed';
       }
     }
 
     return (
-      <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}>
+      <TouchableWithoutFeedback delayPressIn={0.0} deplayPressOut={0.0} onPress={onPress} onLongPress={onLongPress}>
           <View style={[styles.gridItem, enabledSelectedStyle]}>
             <Text style={styles.gridName}>{recording.get('name')}</Text>
             <Text style={styles.gridDuration}>{TimeFormatter(recording.get('duration'))}</Text>
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
   gridItem: {
     backgroundColor: '#CCC',
     marginLeft: 5,
+    marginRight: 5,
     marginTop: 5,
     // width: 100,
     height: 70,
