@@ -22,6 +22,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(RecordingStateActions.requestPlayRecording(recording));
     },
 
+    toggleRecording: (recording) => {
+      dispatch(RecordingStateActions.toggleRecording(recording));
+    },
+
     requestStartRecording: () => {
       dispatch(MicrophoneStateActions.requestStartRecording());
     },

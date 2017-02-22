@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import {
   ListView,
   TouchableWithoutFeedback,
+  TouchableHighlight,
   View,
   Text,
   ProgressBarAndroid,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 import {List} from 'immutable';
@@ -28,7 +30,8 @@ class GridView extends Component {
   constructor (props) {
     super(props);
     this.state = {
-       dataSource: ds.cloneWithRows(props.recordings.toArray())
+       dataSource: ds.cloneWithRows(props.recordings.toArray()),
+       itemsSelected: false
     };
     this._renderRow = this._renderRow.bind(this);
   }
@@ -47,14 +50,27 @@ class GridView extends Component {
   _renderRow(recording) {
     const onPress = this.props.onPress.bind(this, recording);
     const onLongPress = this.props.onLongPress.bind(this, recording);
+
+    var enabledSelectedStyle = {};
+    if (recording.get('isSelected')) {
+      if (Platform.OS === 'ios') {
+        enabledSelectedStyle.shadowColor = "#9ecaed";
+        enabledSelectedStyle.shadowOffset = 1;
+        enabledSelectedStyle.shadowOpacity = 1;
+      } else if (Platform.OS === 'android') {
+        enabledSelectedStyle.elevation = 1;
+      }
+    }
+
     return (
       <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}>
-        <View style={styles.gridItem}>
-          <Text style={styles.gridName}>{recording.get('name')}</Text>
-          <Text style={styles.gridDuration}>{TimeFormatter(recording.get('duration'))}</Text>
-          {/*<Text style={styles.gridCreated}>{moment.duration(moment(recording.get('created')) - moment()).humanize()} ago</Text>*/}
-          {recording.get('isPlaying') && <Icon name="volume-high" size={20} color="white" ></Icon>}
-        </View>
+          <View style={[styles.gridItem, enabledSelectedStyle]}>
+            <Text style={styles.gridName}>{recording.get('name')}</Text>
+            <Text style={styles.gridDuration}>{TimeFormatter(recording.get('duration'))}</Text>
+            {/*<Text style={styles.gridCreated}>{moment.duration(moment(recording.get('created')) - moment()).humanize()} ago</Text>*/}
+            {recording.get('isPlaying') && <Icon name="volume-high" size={20} color="white" ></Icon>}
+            {recording.get('isSelected') && <Icon name="checkbox-marked-circle" size={20} color="green" ></Icon>}
+          </View>
       </TouchableWithoutFeedback>
     )
   }
@@ -81,16 +97,17 @@ const styles = StyleSheet.create({
   },
 
   gridItem: {
-       backgroundColor: '#CCC',
-        marginLeft: 5,
-        marginTop: 5,
-        // width: 100,
-        height: 70,
-        paddingTop: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 10,
-        borderRadius: 10,
+    backgroundColor: '#CCC',
+    marginLeft: 5,
+    marginTop: 5,
+    // width: 100,
+    height: 70,
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    borderRadius: 10,
+    elevation: 5,
   },
 
   gridName: {

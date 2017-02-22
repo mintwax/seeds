@@ -44,6 +44,7 @@ class AppView extends Component {
     requestStartRecording: PropTypes.func.isRequired,
     requestStopRecording: PropTypes.func.isRequired,
     updateElapsedRecordingTime: PropTypes.func.isRequired,
+    toggleRecording: PropTypes.func.isRequired,
     setLayout: PropTypes.func.isRequired
   }
 
@@ -52,6 +53,7 @@ class AppView extends Component {
     this._onMenuEvent = this._onMenuEvent.bind(this);
     this._onPressFAB = this._onPressFAB.bind(this);
     this._onPressRecording = this._onPressRecording.bind(this);
+    this._onLongPressRecording = this._onLongPressRecording.bind(this);
   }
 
   _renderRecordPanel() {
@@ -150,8 +152,7 @@ class AppView extends Component {
   }
 
   _onLongPressRecording(recording) {
-    Toast(recording.get('path') + " selected ");
-    // TODO - hook into redux dispatch
+    this.props.toggleRecording(recording);
   }
 
   _onPressRecording(recording) {

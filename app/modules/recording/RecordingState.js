@@ -84,15 +84,15 @@ export function requestPlayRecording(recording) {
 
         dispatch(startPlayRecording(recording));
       
-        playTimers[path] = setInterval( () => {
+        // playTimers[path] = setInterval( () => {
         
-          sound.getCurrentTime((curSecs) => {
-            if (!recording.get('isPlaying')) {
-              return;
-            }
-            dispatch(updateElapsedPlayTime(recording, curSecs));
-          });
-        }, 500);
+        //   sound.getCurrentTime((curSecs) => {
+        //     if (!recording.get('isPlaying')) {
+        //       return;
+        //     }
+        //     dispatch(updateElapsedPlayTime(recording, curSecs));
+        //   });
+        // }, 500);
       })
     }
   }
@@ -113,7 +113,7 @@ const recordings = (state = defaultRecordings, action) => {
     case TOGGLE_SELECT_RECORDING:
       return state.map((r) => {
         if (r.get('path') === action.path) {
-          return r.set('selected', !r.selected);
+          return r.set('isSelected', !r.isSelected);
         }
         return r;
       });

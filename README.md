@@ -32,14 +32,19 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-refactor playRecording / progressBar - isPlaying, playCurSecs
-refactor selecting recording based on long press
-   
-long press item to select grid item
-   display green checkmark on all selected item
-   ... and navigate to selectPanel - display edit | delete | share icons | back in tool bar
-   clicking anywhere except on another item or toolbar icon will cancel
-   clicking on another item will also select that item - maintain list of selectedItems
+x refactor playRecording / progressBar - isPlaying, playCurSecs
+x refactor selecting recording based on long press   
+x long press item to select grid item
+x display green checkmark on all selected item
+
+why the stoprecording is not being dispatched properly
+
+add navigation to selectPanel
+
+display navigate to selectPanel - display edit | delete | share icons | back in tool bar
+
+onPress anywhere including selected item will cancel selection except for clicking on toolbar
+
     
 # FEATURE - edit 
 edit action pressed - cancel the selectPanel and navigate to edit page
@@ -89,6 +94,7 @@ anitmate add list and remove list - http://moduscreate.com/react-native-dynamic-
 recording name ellipse if exceed 20 characters
 progress bar should not changed size of the grid item
 progress bar should align-self: flex-end
+put the checkmark on the lower right
 
 ----------- PHASE TWO DONE -----------------
 
