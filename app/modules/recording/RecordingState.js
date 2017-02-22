@@ -25,21 +25,24 @@ export function addRecording(duration, path) {
   };
 }
 
-function startPlayRecording() {
+function startPlayRecording(recording) {
   return { 
     type: START_PLAY_RECORDING,
+    path: recording.get('path')
   };
 }
 
-function stopPlayRecording() {
+function stopPlayRecording(recording) {
   return { 
     type: STOP_PLAY_RECORDING,
+    path: recording.get('path')
   };
 }
 
 function updateElapsedPlayTime(recording, elapsedPlaySecs) {
   return {
     type: UPDATE_ELAPSED_PLAY_TIME,
+    path: recording.get('path'),
     elapsedPlaySecs: elapsedPlaySecs
   }
 }
@@ -56,7 +59,7 @@ export function requestPlayRecording(recording) {
     var path = recording.get('path');
     var recordingDuration = recording.get('duration');
 
-    clearInterval(playTimers[path]);
+    //clearInterval(playTimers[path]);
 
     return function(dispatch) {
       var sound = new Sound(path, '', (error) => {
@@ -67,10 +70,10 @@ export function requestPlayRecording(recording) {
         
         sound.play((success) => {
 
-          clearInterval(playTimers[path]);
+          //clearInterval(playTimers[path]);
           
           if (success) {
-            dispatch(updateElapsedPlayTime(recording, recordingDuration));
+            //dispatch(updateElapsedPlayTime(recording, recordingDuration));
           } else {
             Alert.alert('Unable to play', 'playback failed due to audio decoding errors');
           }
@@ -96,7 +99,9 @@ export function requestPlayRecording(recording) {
 
 // Reducers
 const recordings = (state = defaultRecordings, action) => {
+  
   switch (action.type) {
+    
     case ADD_RECORDING:
       return state.unshift(Map({
             name: '', 
@@ -107,7 +112,7 @@ const recordings = (state = defaultRecordings, action) => {
 
     case TOGGLE_SELECT_RECORDING:
       return state.map((r) => {
-        if (r.path === action.path) {
+        if (r.get('path') === action.path) {
           return r.set('selected', !r.selected);
         }
         return r;
@@ -115,7 +120,7 @@ const recordings = (state = defaultRecordings, action) => {
 
     case START_PLAY_RECORDING:
       return state.map((r) => {
-        if (r.path === action.path) {
+        if (r.get('path') === action.path) {
           return r.set('isPlaying', true).set('elapsedPlaySecs', 0.0)
         }
         return r;
@@ -123,7 +128,7 @@ const recordings = (state = defaultRecordings, action) => {
 
     case STOP_PLAY_RECORDING:
       return state.map((r) => {
-        if (r.path === action.path) {
+        if (r.get('path') === action.path) {
           return r.set('isPlaying', false);
         }
         return r;
@@ -131,7 +136,7 @@ const recordings = (state = defaultRecordings, action) => {
 
     case UPDATE_ELAPSED_PLAY_TIME:
       return state.map((r) => {
-        if (r.path === action.path) {
+        if (r.get('path') === action.path) {
           return r.set('elapsedPlaySecs', action.elapsedPlaySecs);
         }
         return r;

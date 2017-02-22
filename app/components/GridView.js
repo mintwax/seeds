@@ -11,6 +11,7 @@ import {
 import {List} from 'immutable';
 import moment from 'moment';
 import TimeFormatter from '../lib/minutes-seconds';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1 !== r2
@@ -52,6 +53,7 @@ class GridView extends Component {
           <Text style={styles.gridName}>{recording.get('name')}</Text>
           <Text style={styles.gridDuration}>{TimeFormatter(recording.get('duration'))}</Text>
           {/*<Text style={styles.gridCreated}>{moment.duration(moment(recording.get('created')) - moment()).humanize()} ago</Text>*/}
+          {recording.get('isPlaying') && <Icon name="volume-high" size={20} color="white" ></Icon>}
         </View>
       </TouchableWithoutFeedback>
     )

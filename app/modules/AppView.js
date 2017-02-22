@@ -57,8 +57,7 @@ class AppView extends Component {
   _renderRecordPanel() {
     return(
         <View style={styles.recordPanel}>
-           <Icon name="microphone" size={90} color="white" >
-          </Icon>
+          <Icon name="microphone" size={90} color="white" ></Icon>
           <Text style={styles.recordTimer}>
             {TimeFormatter(this.props.mic.get('elapsedRecordingSecs'))}
           </Text>
@@ -130,7 +129,7 @@ class AppView extends Component {
       if (!hasPermission) return;
 
       AudioRecorder.onProgress = (data) => {
-        // this.props.updateElapsedRecordingTime( Math.floor(data.currentTime));
+        this.props.updateElapsedRecordingTime( Math.floor(data.currentTime));
       };
 
       AudioRecorder.onFinished = (data) => {
