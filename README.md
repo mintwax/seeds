@@ -32,17 +32,17 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 
 # todo
 
-x display edit | delete | share icons | back in tool bar
-    
 # FEATURE - edit 
-edit action pressed - cancel the selectPanel and navigate to edit page
-edit name - textfield
+create edit screen
+navigate to edit screen
+go back from edit screen - cancel button
 display created 
 display duration
-edit notes - text area
-back button go back to list
-play button to listen to recording on edit page
-cancel and ok button
+edit name - textfield
+edit notes - textarea
+click save will save info and go to home screen
+FAB playbutton to listen to recording on edit page
+
 
 # PERSISTENCE
 add persistence (redux middleware) - async - 
@@ -184,6 +184,11 @@ x display green checkmark on all selected item
 x why the stoprecording is not being dispatched properly - only affects emulator
 x onPress on item will de-select
 x multiple select
+x display edit | delete | share icons | back in tool bar
+x play in navgation playground
+x refactor home screen to use navigation
+x title bar style
+x title bar actions and icons
 
 # reactions to react and javascript stack
 

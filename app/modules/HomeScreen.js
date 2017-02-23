@@ -1,8 +1,9 @@
 import TimeFormatter from '../lib/minutes-seconds';
 import Toast from '../lib/toast'
 import GridView from '../components/GridView';
-import TitleBar from '../components/TitleBar';
+import ToolBar from '../components/ToolBar';
 import { LISTLAYOUT } from '../constants';
+import PopupMenu from '../components/PopupMenu';
 
 import React, { Component, PropTypes } from 'react';
 import {
@@ -34,7 +35,29 @@ const window = Dimensions.get('window');
 const recordModalTop = (window.height - recordModalHeight) / 2;
 const recordModalLeft = (window.width - recordModalWidth) / 2;
 
-class AppView extends Component {
+class HomeScreen extends Component {
+  
+  static navigationOptions = {
+    title: 'Seeds',
+    header: ({state, setParams}) => {
+      
+      return {
+        style: {
+          backgroundColor: '#1B5E20',
+        },
+
+        titleStyle: {
+          fontWeight: '100',
+          color: 'white'
+        },
+      
+        right: (<PopupMenu 
+                actions={['List view', 'Grid view']}
+                onPress={ () => console.log("yo yo")} />)
+  
+      }
+    },
+  };
 
   static propTypes = {
     recordings: PropTypes.instanceOf(List).isRequired,
@@ -82,15 +105,11 @@ class AppView extends Component {
 
     return (
       <View style={styles.container}>
-        <TitleBar 
-          title={"Seeds"}
+        <ToolBar 
           selectedRecordings={this.state.selectedRecordings}
           onPressEdit={this._onPressEdit}
           onPressDelete={this._onPressDelete}
           onPressShare={this._onPressShare}
-          onPressCancel={this._onPressCancel}
-          onMenuEvent={this._onMenuEvent}
-          menuActions={['List view', 'Grid view']}  
         />
         <GridView
             recordings={this.props.recordings}
@@ -346,4 +365,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AppView;
+export default HomeScreen;

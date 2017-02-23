@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import AppView from './AppView';
+import HomeScreen from './HomeScreen';
 import * as RecordingStateActions from '../modules/recording/RecordingState';
 import * as MicrophoneStateActions from '../modules/recording/MicrophoneState';
 import * as LayoutStateActions from '../modules/recording/LayoutState';
@@ -52,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AppView);
+)(HomeScreen);
