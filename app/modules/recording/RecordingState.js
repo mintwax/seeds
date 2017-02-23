@@ -9,6 +9,7 @@ import {
 
 // Actions
 const ADD_RECORDING = 'RecordingState/ADD';
+const UPDATE_RECORDING = 'RecordingState/UPDATE';
 const TOGGLE_SELECT_RECORDING = 'RecordingState/TOGGLE_SELECT';
 const CLEAR_ALL_SELECTED = 'RecordingState/CLEAR_ALL';
 const START_PLAY_RECORDING = 'RecordingState/PLAY'
@@ -23,6 +24,16 @@ export function addRecording(duration, path) {
     path: path
   };
 }
+
+export function updateRecording(recording) {
+
+  return { 
+    type: UPDATE_RECORDING,
+    path: recording.get('path'),
+    name: recording.get('name'),
+  };
+}
+
 
 function startPlayRecording(recording) {
   return { 
@@ -96,6 +107,14 @@ const recordings = (state = defaultRecordings, action) => {
             path: action.path,
             created: moment().valueOf()
       }));
+
+    case UPDATE_RECORDING:
+      return state.map((r) => {
+        if (r.get('path') === action.path) {
+          return r.set('name', action.name);
+        }
+        return r;
+      });
 
     case CLEAR_ALL_SELECTED:
       return state.map((r) => {

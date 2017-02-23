@@ -33,14 +33,17 @@ export JAVA_HOME=/c/Java/jdk1.8.0_121
 # todo
 
 # FEATURE - edit 
-create edit screen
-navigate to edit screen
-go back from edit screen - cancel button
+x create edit screen
+x navigate to edit screen
+x go back from edit screen - cancel button
+x edit name - textfield
+x click save will save info and go to home screen
+
+BUG - why does state reset after clicking back, should use navigate to HOME SCREEN instead
+cleanup form ui
 display created 
 display duration
-edit name - textfield
 edit notes - textarea
-click save will save info and go to home screen
 FAB playbutton to listen to recording on edit page
 
 

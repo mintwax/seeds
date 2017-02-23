@@ -80,7 +80,6 @@ class HomeScreen extends Component {
     this._onPressRecording = this._onPressRecording.bind(this);
     this._onLongPressRecording = this._onLongPressRecording.bind(this);
 
-    this._onPressCancel = this._onPressCancel.bind(this);
     this._onPressDelete = this._onPressDelete.bind(this);
     this._onPressEdit= this._onPressEdit.bind(this);
     this._onPressShare = this._onPressShare.bind(this);
@@ -130,7 +129,13 @@ class HomeScreen extends Component {
   }
 
   _onPressEdit() {
-    Toast("edit");
+    const {navigate} = this.props.navigation;
+
+    if (this.state.selectedRecordings.size != 1) {
+      throw 'only one recording should be selected for edit to be enabled';
+    } 
+        
+    navigate('Edit', { recording: this.state.selectedRecordings.first()});
   }
 
   _onPressDelete() {
@@ -139,10 +144,6 @@ class HomeScreen extends Component {
 
   _onPressShare() {
     Toast("share");
-  }
-
-  _onPressCancel() {
-    this.props.clearAllSelected();
   }
 
   _onMenuEvent = (eventName, index) => {
@@ -155,7 +156,6 @@ class HomeScreen extends Component {
       }
     }
   }
-
 
   _checkPermission() {
     if (Platform.OS !== 'android') {
