@@ -58,6 +58,7 @@ class EditScreen extends Component {
 
   _saveRecording() {
     this.props.updateRecording(fromJS(this.state.editableRecording));
+    this.props.clearAllSelected();
     this.props.navigation.goBack();
   }
 

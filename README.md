@@ -38,12 +38,14 @@ x navigate to edit screen
 x go back from edit screen - cancel button
 x edit name - textfield
 x click save will save info and go to home screen
+x toolbar moved to navigation bar
 
-BUG - why does state reset after clicking back, should use navigate to HOME SCREEN instead
-cleanup form ui
+use nativebase for text area
+edit notes - textarea
 display created 
 display duration
-edit notes - textarea
+edit background color
+edit icon 
 FAB playbutton to listen to recording on edit page
 
 
@@ -55,6 +57,8 @@ add persistence (redux middleware) - async -
 
 # FEATURE - delete
 confirm delete of selected items
+how to display modal using navigation
+... setParams
 
 # add unit testing
 add unit tests via jest
@@ -88,6 +92,10 @@ recording name ellipse if exceed 20 characters
 progress bar should not changed size of the grid item
 progress bar should align-self: flex-end
 put the checkmark on the lower right
+BUG - why does state reset after clicking back, should use navigate to HOME SCREEN instead
+UI - spacing of the toolbar icons
+toolbar icons should have feedback when clicking
+print print statements in all renders and do performance optimizations
 
 ----------- PHASE TWO DONE -----------------
 

@@ -3,11 +3,12 @@ import {
   View, 
   Text,
   StyleSheet,
-  TouchableHighlight
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import {List} from 'immutable'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import PopupMenu from '../components/PopupMenu';
 
 const ICON_SIZE=24;
 
@@ -15,15 +16,21 @@ function ToolBarButton(props) {
   if (!props.show) {
     return null;
   } else {
-    return (<TouchableHighlight onPress={props.onPress}>
-              <Icon name={props.iconName} size={ICON_SIZE} color={'#1B5E20'} />
-            </TouchableHighlight>)}
+    return (<TouchableWithoutFeedback onPress={props.onPress}>
+              <Icon name={props.iconName} size={ICON_SIZE} color={'white'} />
+            </TouchableWithoutFeedback>)}
 }
 
 class ToolBar extends Component {
 
   constructor (props) {
     super(props);
+
+    this.state = {
+      displayDelete: false,
+      displayEdit: false,
+      displayShare: false,
+    }
   }
   
   componentWillReceiveProps(nextProps) {
@@ -42,24 +49,24 @@ class ToolBar extends Component {
     this.setState({
       displayDelete: displayDelete,
       displayEdit: displayEdit,
-      displayShare: displayShare,
+      displayShare: displayShare
     });
   }
 
   render() { 
-    if (this.props.selectedRecordings.size === 0) {
-      return null;
-    }
-    
+
+    const {navigate} = this.props;
+
     return(
       <View style={styles.toolBar}>
         <ToolBarButton show={this.state.displayEdit} 
-          iconName='pencil' onPress={this.props.onPressEdit} />
+          iconName='pencil' onPress={ () => navigate('Edit', { recording: this.props.selectedRecordings.first()})}/>
         <ToolBarButton show={this.state.displayDelete}
-           iconName='delete' onPress={this.props.onPressDelete} />
+           iconName='delete' />
         <ToolBarButton show={this.state.displayShare}
-          iconName='share' onPress={this.props.onPressShare} />
-        
+          iconName='share' />
+        <PopupMenu actions={['List view', 'Grid view']}
+                    onPress={ () => console.log("yo yo")} />
       </View>
     );
   }
@@ -69,22 +76,16 @@ class ToolBar extends Component {
 const styles = StyleSheet.create({
 
     toolBar: {
-      paddingTop: 10,
-      paddingBottom: 10,
-      paddingRight: 10,
-      paddingLeft: 10,
-      backgroundColor: 'white',
+      backgroundColor: '#1B5E20',
       flexDirection: 'row',
-      justifyContent: 'space-around'
+      justifyContent: 'space-between',
     },
 });
 
 
 ToolBar.propTypes = {
   selectedRecordings: PropTypes.instanceOf(List),
-  onPressShare: PropTypes.func.isRequired,
-  onPressDelete: PropTypes.func.isRequired,
-  onPressEdit: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired
 }
 
 export default ToolBar;

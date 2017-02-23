@@ -3,7 +3,6 @@ import Toast from '../lib/toast'
 import GridView from '../components/GridView';
 import ToolBar from '../components/ToolBar';
 import { LISTLAYOUT } from '../constants';
-import PopupMenu from '../components/PopupMenu';
 
 import React, { Component, PropTypes } from 'react';
 import {
@@ -38,8 +37,15 @@ const recordModalLeft = (window.width - recordModalWidth) / 2;
 class HomeScreen extends Component {
   
   static navigationOptions = {
-    title: 'Seeds',
-    header: ({state, setParams}) => {
+    title: ({state}) => {
+      return 'Seeds'
+    },
+
+    header: ({state, navigate}) => { 
+      var selectedRecordings = List([]);
+      if (state.params && state.params.selectedRecordings) {
+        selectedRecordings = state.params.selectedRecordings;
+      }
       
       return {
         style: {
@@ -51,10 +57,8 @@ class HomeScreen extends Component {
           color: 'white'
         },
       
-        right: (<PopupMenu 
-                actions={['List view', 'Grid view']}
-                onPress={ () => console.log("yo yo")} />)
-  
+        right: (<ToolBar navigate={navigate} selectedRecordings={selectedRecordings} />)
+
       }
     },
   };
@@ -80,10 +84,6 @@ class HomeScreen extends Component {
     this._onPressRecording = this._onPressRecording.bind(this);
     this._onLongPressRecording = this._onLongPressRecording.bind(this);
 
-    this._onPressDelete = this._onPressDelete.bind(this);
-    this._onPressEdit= this._onPressEdit.bind(this);
-    this._onPressShare = this._onPressShare.bind(this);
-
     this.state = {
       selectedRecordings: List([])
     }
@@ -104,12 +104,6 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <ToolBar 
-          selectedRecordings={this.state.selectedRecordings}
-          onPressEdit={this._onPressEdit}
-          onPressDelete={this._onPressDelete}
-          onPressShare={this._onPressShare}
-        />
         <GridView
             recordings={this.props.recordings}
             onPress={this._onPressRecording}
@@ -126,16 +120,6 @@ class HomeScreen extends Component {
 
       </View>
     );
-  }
-
-  _onPressEdit() {
-    const {navigate} = this.props.navigation;
-
-    if (this.state.selectedRecordings.size != 1) {
-      throw 'only one recording should be selected for edit to be enabled';
-    } 
-        
-    navigate('Edit', { recording: this.state.selectedRecordings.first()});
   }
 
   _onPressDelete() {
@@ -254,13 +238,22 @@ class HomeScreen extends Component {
     });
   }
 
-  _onLongPressRecording(recording) {
+  _toggleRecording(recording) {
     this.props.toggleRecording(recording);
+    setTimeout( () => {
+        const {setParams} = this.props.navigation;
+        setParams({ selectedRecordings: this.state.selectedRecordings });
+    }, 100);  // give time for the reducer to work
+    
+  }
+
+  _onLongPressRecording(recording) {
+    this._toggleRecording(recording);
   }
 
   _onPressRecording(recording) {
     if (this.state.selectedRecordings.size > 0) {
-      this.props.toggleRecording(recording);
+      this._toggleRecording(recording);
     } else {
       this.props.requestPlayRecording(recording);
     }

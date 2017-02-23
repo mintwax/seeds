@@ -18,6 +18,10 @@ const mapDispatchToProps = (dispatch) => {
 
     requestPlayRecording: (recording) => {
       dispatch(RecordingStateActions.requestPlayRecording(recording));
+    },
+
+    clearAllSelected: () => {
+      dispatch(RecordingStateActions.clearAllSelected());
     }
   }
 

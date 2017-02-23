@@ -8,7 +8,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 const routes = {
-  Home: { screen: HomeScreenContainer },
+  Home: { screen: HomeScreenContainer  },
   Edit: { screen: EditScreenContainer }
 }
 const config = {

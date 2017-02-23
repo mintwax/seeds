@@ -93,21 +93,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    flex: 1
+    flex: 1,
+    padding: 10
     // backgroundColor: 'tan',
   },
 
   gridItem: {
     backgroundColor: '#CCC',
-    marginLeft: 5,
-    marginRight: 5,
+    margin: 10,
     marginTop: 5,
     // width: 100,
     height: 70,
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
+    padding: 10,
     borderRadius: 10,
     elevation: 5,
   },
