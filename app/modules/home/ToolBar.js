@@ -8,7 +8,7 @@ import {
 
 import {List} from 'immutable'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import PopupMenu from '../components/PopupMenu';
+import PopupMenu from '../../components/PopupMenu';
 
 const ICON_SIZE=24;
 
@@ -30,23 +30,30 @@ class ToolBar extends Component {
       displayDelete: false,
       displayEdit: false,
       displayShare: false,
+      selectedRecordings: List([])
     }
   }
   
   componentWillReceiveProps(nextProps) {
+    
+    var selectedRecordings = nextProps.recordings.filter((recording) => {
+      return recording.get('isSelected');
+    })
+
     var displayDelete = false, displayEdit = false, displayShare = false;
 
-    if (nextProps.selectedRecordings.size > 0) {
+    if (selectedRecordings.size > 0) {
       displayDelete = true;
       displayEdit = true;
       displayShare = true;
     };
     
-    if (nextProps.selectedRecordings.size == 2) {
+    if (selectedRecordings.size == 2) {
       displayEdit = false
     } 
 
     this.setState({
+      selectedRecordings: selectedRecordings,
       displayDelete: displayDelete,
       displayEdit: displayEdit,
       displayShare: displayShare
@@ -60,7 +67,7 @@ class ToolBar extends Component {
     return(
       <View style={styles.toolBar}>
         <ToolBarButton show={this.state.displayEdit} 
-          iconName='pencil' onPress={ () => navigate('Edit', { recording: this.props.selectedRecordings.first()})}/>
+          iconName='pencil' onPress={ () => navigate('Edit', { recording: this.state.selectedRecordings.first()})}/>
         <ToolBarButton show={this.state.displayDelete}
            iconName='delete' />
         <ToolBarButton show={this.state.displayShare}
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
 
 
 ToolBar.propTypes = {
-  selectedRecordings: PropTypes.instanceOf(List),
+  recordings: PropTypes.instanceOf(List),
   navigate: PropTypes.func.isRequired
 }
 

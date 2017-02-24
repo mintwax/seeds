@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import HomeScreen from './HomeScreen';
-import * as RecordingStateActions from '../modules/recording/RecordingState';
-import * as MicrophoneStateActions from '../modules/recording/MicrophoneState';
-import * as LayoutStateActions from '../modules/recording/LayoutState';
+import * as RecordingStateActions from './RecordingState';
+import * as MicrophoneStateActions from './MicrophoneState';
+import * as LayoutStateActions from './LayoutState';
 
 const mapStateToProps = (state) => {
   return ({

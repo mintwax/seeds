@@ -1,8 +1,8 @@
-import TimeFormatter from '../lib/minutes-seconds';
-import Toast from '../lib/toast'
-import GridView from '../components/GridView';
-import ToolBar from '../components/ToolBar';
-import { LISTLAYOUT } from '../constants';
+import TimeFormatter from '../../lib/minutes-seconds';
+import Toast from '../../lib/toast'
+import GridView from '../../components/GridView';
+import ToolBarContainer from './ToolBarContainer';
+import { LISTLAYOUT } from '../../constants';
 
 import React, { Component, PropTypes } from 'react';
 import {
@@ -42,10 +42,6 @@ class HomeScreen extends Component {
     },
 
     header: ({state, navigate}) => { 
-      var selectedRecordings = List([]);
-      if (state.params && state.params.selectedRecordings) {
-        selectedRecordings = state.params.selectedRecordings;
-      }
       
       return {
         style: {
@@ -57,7 +53,7 @@ class HomeScreen extends Component {
           color: 'white'
         },
       
-        right: (<ToolBar navigate={navigate} selectedRecordings={selectedRecordings} />)
+        right: (<ToolBarContainer navigate={navigate} />)
 
       }
     },
@@ -201,6 +197,7 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
+    console.log('HOME SCREEN - did mount');
     this._checkPermission().then((hasPermission) => {
       this.setState({ hasPermission });
 
@@ -224,11 +221,12 @@ class HomeScreen extends Component {
   }
 
   componentWillUnmount() {
+    console.log('HOME SCREEN - will Unmount');
     // TODO - track all the playings and clear the timeouts and intervals
   }
 
   componentWillReceiveProps(nextProps) {
-
+    
     var selectedRecordings = nextProps.recordings.filter((recording) => {
       return recording.get('isSelected');
     })
@@ -239,12 +237,7 @@ class HomeScreen extends Component {
   }
 
   _toggleRecording(recording) {
-    this.props.toggleRecording(recording);
-    setTimeout( () => {
-        const {setParams} = this.props.navigation;
-        setParams({ selectedRecordings: this.state.selectedRecordings });
-    }, 100);  // give time for the reducer to work
-    
+    this.props.toggleRecording(recording); 
   }
 
   _onLongPressRecording(recording) {

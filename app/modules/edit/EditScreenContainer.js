@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import EditScreen from './EditScreen';
-import * as RecordingStateActions from '../modules/recording/RecordingState';
+import * as RecordingStateActions from '../home/RecordingState';
 
 const mapStateToProps = (state) => {
   return ({

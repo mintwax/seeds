@@ -1,8 +1,8 @@
 // import 'es6-symbol/implement';
 import {Provider} from 'react-redux';
 import store from './redux/store';
-import HomeScreenContainer from './modules/HomeScreenContainer';
-import EditScreenContainer from './modules/EditScreenContainer';
+import HomeScreenContainer from './modules/home/HomeScreenContainer';
+import EditScreenContainer from './modules/edit/EditScreenContainer';
 import React from 'react';
 
 import { StackNavigator } from 'react-navigation';

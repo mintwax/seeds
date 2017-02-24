@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import RecordingStateReducer from '../modules/recording/RecordingState';
-import LayoutStateReducer from '../modules/recording/LayoutState';
-import MicrophoneStateReducer from '../modules/recording/MicrophoneState';
+import RecordingStateReducer from '../modules/home/RecordingState';
+import LayoutStateReducer from '../modules/home/LayoutState';
+import MicrophoneStateReducer from '../modules/home/MicrophoneState';
 
 const reducers = combineReducers({
   recordings: RecordingStateReducer,

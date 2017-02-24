@@ -40,6 +40,8 @@ x edit name - textfield
 x click save will save info and go to home screen
 x toolbar moved to navigation bar
 
+use selected recordings from redux
+
 use nativebase for text area
 edit notes - textarea
 display created 

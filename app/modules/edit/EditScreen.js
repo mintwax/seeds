@@ -1,12 +1,14 @@
-import Toast from '../lib/toast'
+import Toast from '../../lib/toast'
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
   TextInput,
   Text,
-  Button
 } from 'react-native';
+
+import { Button } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Map, fromJS} from 'immutable';
 
@@ -77,11 +79,11 @@ class EditScreen extends Component {
           }
           value={this.state.editableRecording.name} 
         />
-        <Button
-          onPress={this._saveRecording}
-          title="Save"
-          color="#841584"
-        />
+        <Button iconLeft light
+          onPress={this._saveRecording}>
+            <Icon name="content-save" size={30} color="blue" />
+            <Text>Save</Text>
+        </Button>
 
      
       </View>
